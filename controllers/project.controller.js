@@ -67,3 +67,26 @@ export const getProjectDetails = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+export const updateProject = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const { name, code, description, access_type, member_access } = req.body
+
+    await Project.findByIdAndUpdate(
+      { _id: id },
+      {
+        name,
+        code,
+        description,
+        access_type,
+        member_access
+      }
+    )
+
+    res.status(200).json({ message: "Project updated successfuly" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
