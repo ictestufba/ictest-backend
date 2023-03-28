@@ -1,0 +1,76 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2023-03-28T03:04:55.934Z",
+  "__export_source": "insomnia.desktop.app:v2023.1.0",
+  "resources": [
+    {
+      "_id": "req_46c90d766a7a4a7c88515eca403ffcb4",
+      "parentId": "wrk_e8a742f6bf4b409c9283e193688f9e5d",
+      "modified": 1679972663800,
+      "created": 1679972508964,
+      "url": "http://localhost:8080/projects",
+      "name": "Create project",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Projeto 1\",\n\t\"code\": \"proj1\",\n\t\"description\": \"Descrição do projeto 1\",\n\t\"access_type\": \"private\",\n\t\"member_access\": \"add_all\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "metaSortKey": -1679972508964,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_e8a742f6bf4b409c9283e193688f9e5d",
+      "parentId": null,
+      "modified": 1679972503417,
+      "created": 1679972503417,
+      "name": "ictest-backend",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_7c3f7ca47fa9488df76468010789ab2772f9f189",
+      "parentId": "wrk_e8a742f6bf4b409c9283e193688f9e5d",
+      "modified": 1679972503422,
+      "created": 1679972503422,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": null,
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1679972503422,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_7c3f7ca47fa9488df76468010789ab2772f9f189",
+      "parentId": "wrk_e8a742f6bf4b409c9283e193688f9e5d",
+      "modified": 1679972503423,
+      "created": 1679972503423,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_487ac5b4bccb44ef8a57eedae293892e",
+      "parentId": "wrk_e8a742f6bf4b409c9283e193688f9e5d",
+      "modified": 1679972503418,
+      "created": 1679972503418,
+      "fileName": "ictest-backend",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}

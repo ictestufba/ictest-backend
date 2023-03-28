@@ -14,7 +14,6 @@ const ProjectSchema = new mongoose.Schema(
     member_access: {
       type: String,
       enum: ["add_all", "add_specific", "dont_add"],
-      default: "add_all",
       required: true
     }
   },
@@ -23,4 +22,4 @@ const ProjectSchema = new mongoose.Schema(
   }
 )
 
-export const projectModel = mongoose.model("Project", ProjectSchema)
+export const Project = mongoose.model("Project", ProjectSchema)
