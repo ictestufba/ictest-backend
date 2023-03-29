@@ -6,7 +6,7 @@ export const createProject = async (req, res) => {
       name,
       code,
       description = "",
-      access_type,
+      visibility,
       member_access
     } = req.body
 
@@ -14,7 +14,7 @@ export const createProject = async (req, res) => {
       name,
       code,
       description,
-      access_type,
+      visibility,
       member_access
     })
 
@@ -72,7 +72,7 @@ export const updateProject = async (req, res) => {
   try {
     const { id } = req.params
 
-    const { name, code, description, access_type, member_access } = req.body
+    const { name, code, description, visibility, member_access } = req.body
 
     await Project.findByIdAndUpdate(
       { _id: id },
@@ -80,7 +80,7 @@ export const updateProject = async (req, res) => {
         name,
         code,
         description,
-        access_type,
+        visibility,
         member_access
       }
     )

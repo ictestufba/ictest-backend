@@ -5,7 +5,7 @@ const ProjectSchema = new mongoose.Schema(
     name: { type: String, required: true },
     code: { type: String, required: true },
     description: { type: String, required: false },
-    access_type: {
+    visibility: {
       type: String,
       enum: ["private", "public"],
       default: "private",
