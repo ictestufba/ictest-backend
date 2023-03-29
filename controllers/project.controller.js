@@ -96,7 +96,6 @@ export const getAllSuitesFromAProject = async (req, res) => {
   try {
       const { project_id } = req.params
       const suites = await Suite.find({ project_id: project_id})
-      // (select * from suites where project_id = id)
 
       if (!suites) {
           return res.status(404).json({ message: "Suite not found" })
