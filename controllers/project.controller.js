@@ -1,5 +1,4 @@
 import { Project } from "../mongodb/models/project.js"
-import { Suite } from "../mongodb/models/suite.js"
 
 export const createProject = async (req, res) => {
   try {
@@ -89,21 +88,5 @@ export const updateProject = async (req, res) => {
     res.status(200).json({ message: "Project updated successfuly" })
   } catch (error) {
     res.status(500).json({ message: error.message })
-  }
-}
-
-export const getAllSuitesFromAProject = async (req, res) => {
-  try {
-      const { project_id } = req.params
-      const suites = await Suite.find({ project_id: project_id})
-
-      if (!suites) {
-          return res.status(404).json({ message: "Suite not found" })
-        }
-
-      res.status(200).json(suites)
-
-  } catch (error) {
-      res.status(500).json({ message: error.message })
   }
 }
