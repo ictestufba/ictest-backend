@@ -6,7 +6,7 @@ const SuiteSchema = new mongoose.Schema(
     description: { type: String, required: false },
     preconditions: { type: String, required: true },
     suites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Suite", required: false}],
-    cases: {type: Array, required: false},
+    cases: [{ type: mongoose.Schema.Types.ObjectId, ref: "Case", required: false}],
     project_id: { type: String, required: true },
   },
   {
