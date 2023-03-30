@@ -95,17 +95,69 @@ export const updateSuite = async (req, res) => {
 }
 
 export const getAllSuitesFromAProject = async (req, res) => {
-    try{
-        const { project_id } = req.params
-        const suites = await Suite.find({ project_id: project_id})
+  try {
+    const { project_id } = req.params
+    const suites = await Suite.find({ project_id: project_id })
 
-        if (!suites) {
-            return res.status(404).json({ message: "Suite not found" })
-          }
-
-        res.status(200).json(suites)
-
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+    if (!suites) {
+      return res.status(404).json({ message: "Suite not found" })
     }
+
+    res.status(200).json(suites)
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const addCasesToSuite = async (req, res) => {
+  try {
+    const {
+      suite_id,
+      title,
+      status,
+      description = "",
+      severity,
+      priority,
+      type,
+      layer,
+      is_flaky,
+      behavior,
+      automation_status,
+      pre_conditions,
+      post_conditions,
+      attachments = [],
+      steps
+    } = req.body
+
+
+    const suite = await Suite.findById(suite_id)
+    if (!suite) {
+      res.status(404).json({ message: "Suite not found" })
+    }
+
+    const newCase = {
+      title,
+      status,
+      description,
+      severity,
+      priority,
+      type,
+      layer,
+      is_flaky,
+      behavior,
+      automation_status,
+      pre_conditions,
+      post_conditions,
+      attachments,
+      steps,
+    }
+
+    suite.cases.push(newCase)
+    await suite.save()
+
+    res.status(200).json({ message: "Cases added to suite successfuly", data: newCase })
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
 }
