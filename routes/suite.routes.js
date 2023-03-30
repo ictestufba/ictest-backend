@@ -6,7 +6,8 @@ import {
   deleteSuite,
   getSuiteDetails,
   updateSuite,
-  getAllSuitesFromAProject
+  getAllSuitesFromAProject,
+  addCasesToSuite
 } from "../controllers/suite.controller.js"
 
 const suiteRouter = express.Router()
@@ -17,5 +18,6 @@ suiteRouter.route("/:id").delete(deleteSuite)
 suiteRouter.route("/:id").get(getSuiteDetails)
 suiteRouter.route("/:id").patch(updateSuite)
 suiteRouter.route("/:project_id/list").get(getAllSuitesFromAProject)
+suiteRouter.route("/:id/add-cases").post(addCasesToSuite)
 
 export { suiteRouter }

@@ -109,3 +109,23 @@ export const getAllSuitesFromAProject = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+export const addCasesToSuite = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { cases } = req.body
+
+    if(!Array.isArray(cases)) {
+      res.status(404).json({ message: "Cases not found, please provide a valid input"})
+    }
+
+    await Suite.findByIdAndUpdate(
+      {_id: id},
+      { cases }
+    )
+
+    res.status(200).json({ message: "Cases added to suite successfuly"})
+  } catch (error) {
+    res.status(500).json({ message: "Suite not found or 'cases' empty"})
+  }
+}
