@@ -113,19 +113,61 @@ export const getAllSuitesFromAProject = async (req, res) => {
 export const addCasesToSuite = async (req, res) => {
   try {
     const { id } = req.params
-    const { cases } = req.body
+    
+    const { 
+      title,
+      status,
+      description = "",
+      suite_id = "",
+      project_id = "",
+      severity,
+      priority,
+      type,
+      layer,
+      is_flaky,
+      milestone = "",
+      behavior,
+      automation_status,
+      pre_conditions,
+      post_conditions,
+      tags = "",
+      attachments = "",
+      parameters = "",
+      steps  
+ } = req.body
 
-    if(!Array.isArray(cases)) {
-      res.status(404).json({ message: "Cases not found, please provide a valid input"})
+      const newCase = new Case(
+        title,
+        status,
+        description,
+        suite_id,
+        project_id,
+        severity,
+        priority,
+        type,
+        layer,
+        is_flaky = false,
+        milestone,
+        behavior,
+        automation_status,
+        pre_conditions,
+        post_conditions,
+        tags,
+        attachments,
+        parameters,
+        steps 
+      )
+
+    const suite = await Suite.findById(id)
+    if(!suite) {
+      res.status(404).json({ message: "Suite not found"})
     }
 
-    await Suite.findByIdAndUpdate(
-      {_id: id},
-      { cases }
-    )
+    suite.cases.push(newCase)
+    await suite.save()
 
-    res.status(200).json({ message: "Cases added to suite successfuly"})
+    res.status(200).json({ message: "Cases added to suite successfuly", data: newCase })
   } catch (error) {
-    res.status(500).json({ message: "Suite not found or 'cases' empty"})
+    res.status(500).json({ message: error })
   }
 }
