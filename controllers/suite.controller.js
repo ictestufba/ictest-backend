@@ -95,72 +95,62 @@ export const updateSuite = async (req, res) => {
 }
 
 export const getAllSuitesFromAProject = async (req, res) => {
-    try{
-        const { project_id } = req.params
-        const suites = await Suite.find({ project_id: project_id})
+  try {
+    const { project_id } = req.params
+    const suites = await Suite.find({ project_id: project_id })
 
-        if (!suites) {
-            return res.status(404).json({ message: "Suite not found" })
-          }
-
-        res.status(200).json(suites)
-
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+    if (!suites) {
+      return res.status(404).json({ message: "Suite not found" })
     }
+
+    res.status(200).json(suites)
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
 }
 
 export const addCasesToSuite = async (req, res) => {
   try {
-    const { id } = req.params
-    
-    const { 
+    const {
+      suite_id,
       title,
       status,
       description = "",
-      suite_id = "",
-      project_id = "",
       severity,
       priority,
       type,
       layer,
       is_flaky,
-      milestone = "",
       behavior,
       automation_status,
       pre_conditions,
       post_conditions,
-      tags = "",
-      attachments = "",
-      parameters = "",
-      steps  
- } = req.body
+      attachments = [],
+      steps
+    } = req.body
 
-      const newCase = new Case(
-        title,
-        status,
-        description,
-        suite_id,
-        project_id,
-        severity,
-        priority,
-        type,
-        layer,
-        is_flaky = false,
-        milestone,
-        behavior,
-        automation_status,
-        pre_conditions,
-        post_conditions,
-        tags,
-        attachments,
-        parameters,
-        steps 
-      )
 
-    const suite = await Suite.findById(id)
-    if(!suite) {
-      res.status(404).json({ message: "Suite not found"})
+    const suite = await Suite.findById(suite_id)
+    if (!suite) {
+      res.status(404).json({ message: "Suite not found" })
+    }
+
+    const newCase = {
+      title,
+      status,
+      description,
+      severity,
+      priority,
+      type,
+      layer,
+      is_flaky,
+      behavior,
+      automation_status,
+      pre_conditions,
+      post_conditions,
+      attachments,
+      steps,
     }
 
     suite.cases.push(newCase)
