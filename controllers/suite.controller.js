@@ -161,3 +161,111 @@ export const addCasesToSuite = async (req, res) => {
     res.status(500).json({ message: error })
   }
 }
+
+export const getCaseDetails = async (req, res) => {
+  try {
+
+    const { suite_id, case_id } = req.params
+
+    const suite = await Suite.findById(suite_id)
+    if (!suite) {
+      res.status(404).json({ message: "Suite not found" })
+    }
+
+    else {
+      const testCase = suite.cases.id(case_id)
+      if (!testCase) {
+        res.status(404).json({ message: "Test case not found" })
+      } else {
+        res.status(200).json(testCase)
+      }
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const deleteCase = async (req, res) => {
+  try {
+
+    const { suite_id, case_id } = req.params
+
+    const suite = await Suite.findById(suite_id)
+    if (!suite) {
+      res.status(404).json({ message: "Suite not found" })
+    } 
+
+    else {
+      const testCase = suite.cases.id(case_id)
+      if (!testCase) {
+        res.status(404).json({ message: "Test case not found" })
+      } else {
+        testCase.remove()
+        await suite.save()
+        res.status(200).json({ message: "Test case deleted successfully" })
+      }
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const updateCase = async (req, res) => {
+  try {
+
+    const { suite_id, case_id } = req.params
+    const suite = await Suite.findById(suite_id)
+
+    if (!suite) {
+      res.status(404).json({ message: "Suite not found" })
+    } 
+    else {
+      const testCase = suite.cases.id(case_id)
+      if (!testCase) {
+        res.status(404).json({ message: "Test case not found" })
+      } 
+      else {
+        const {
+          title,
+          status,
+          description = "",
+          severity,
+          priority,
+          type,
+          layer,
+          is_flaky,
+          behavior,
+          automation_status,
+          pre_conditions,
+          post_conditions,
+          attachments = [],
+          steps
+        } = req.body
+
+        testCase.set({
+          title,
+          status,
+          description,
+          severity,
+          priority,
+          type,
+          layer,
+          is_flaky,
+          behavior,
+          automation_status,
+          pre_conditions,
+          post_conditions,
+          attachments,
+          steps,
+        })
+
+        await suite.save()
+        res.status(200).json({ message: "Test case updated successfully", data: testCase })
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
