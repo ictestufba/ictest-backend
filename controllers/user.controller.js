@@ -1,18 +1,18 @@
-import { User } from "../mongodb/models/user";
-import bcrypt from "bcrypt";
+import { User } from "../mongodb/models/user.js";
+import { hashPassword, validateEmail } from "../helpers/user.helpers.js";
 
 export const createUser = async (req, res) => {
   try {
+    //to-do: avatar precisa ser em formato de arquivo e
+    //deve poder subir para o cloudinary
     const { name, email, password, avatar } = req.body;
 
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
+    validateEmail(email);
 
     const user = new User({
       name,
       email,
-      password: hash,
+      password: hashPassword(password),
       avatar,
     });
 
