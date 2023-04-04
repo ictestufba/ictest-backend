@@ -42,7 +42,7 @@ export const getUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const user = await User.find();
+    const user = await User.find({}, "_id name email avatar").exec();
 
     res.status(200).json(user);
   } catch (error) {
