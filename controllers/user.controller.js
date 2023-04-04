@@ -59,7 +59,7 @@ export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, avatar } = req.body;
 
-    validateEmail(email);
+    if (email) validateEmail(email);
 
     const user = await User.findByIdAndUpdate(id, { name, email, avatar });
 
