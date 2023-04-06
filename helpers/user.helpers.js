@@ -14,3 +14,13 @@ export const validateEmail = (email) => {
     throw new Error("Email inválido.");
   }
 };
+
+export const comparePasswords = async (oldPass, newPass) => {
+  const is_equal = await bcrypt.compare(newPass, oldPass);
+
+  if (is_equal) {
+    throw new Error("Same password as before");
+  } else {
+    return true;
+  }
+};

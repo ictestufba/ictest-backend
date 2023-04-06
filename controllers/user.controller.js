@@ -1,5 +1,9 @@
 import { User } from "../mongodb/models/user.js";
-import { hashPassword, validateEmail } from "../helpers/user.helpers.js";
+import {
+  hashPassword,
+  validateEmail,
+  comparePasswords,
+} from "../helpers/user.helpers.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -45,6 +49,46 @@ export const getAllUsers = async (req, res) => {
     const user = await User.find({}, "_id name email avatar").exec();
 
     res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, avatar } = req.body;
+
+    validateEmail(email);
+
+    const user = await User.findByIdAndUpdate(id, { name, email, avatar });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User updated successfuly" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await comparePasswords(user.password, password);
+
+    await User.findByIdAndUpdate(id, { password: hashPassword(password) });
+
+    await res.status(200).json({ message: "Password updated successfuly" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
