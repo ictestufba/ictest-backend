@@ -59,7 +59,7 @@ export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, avatar } = req.body;
 
-    validateEmail(email);
+    if (email) validateEmail(email);
 
     const user = await User.findByIdAndUpdate(id, { name, email, avatar });
 
@@ -89,6 +89,22 @@ export const changePassword = async (req, res) => {
     await User.findByIdAndUpdate(id, { password: hashPassword(password) });
 
     await res.status(200).json({ message: "Password updated successfuly" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.deleteOne({ _id: id });
+
+    if (user.deletedCount == 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await res.status(200).json({ message: "User deleted successfuly" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -3,6 +3,7 @@ import express from "express";
 import {
   changePassword,
   createUser,
+  deleteUser,
   getAllUsers,
   getUser,
   updateUser,
@@ -15,5 +16,6 @@ userRouter.route("/:id").get(getUser);
 userRouter.route("/").get(getAllUsers);
 userRouter.route("/:id").put(updateUser);
 userRouter.route("/:id").patch(changePassword);
+userRouter.route("/:id").delete(deleteUser);
 
 export { userRouter };

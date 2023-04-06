@@ -11,7 +11,7 @@ export const validateEmail = (email) => {
   if (validator.validate(email)) {
     return true;
   } else {
-    throw new Error("Email inválido.");
+    throw new Error("Invalid email");
   }
 };
 
