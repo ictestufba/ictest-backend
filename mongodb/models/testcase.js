@@ -38,7 +38,6 @@ const TestCaseSchema = new mongoose.Schema(
         , "compatibility"
         , "integration"
         , "exploratory"
-        ,
       ],
       default: "actual",
       required: true
@@ -59,6 +58,7 @@ const TestCaseSchema = new mongoose.Schema(
     pre_conditions: { type: String, required: false },
     post_conditions: { type: String, required: false },
     attachments: { type: String, required: false },
+    assignees: [{ type: String, required: false }]
   },
   {
     timestamps: true

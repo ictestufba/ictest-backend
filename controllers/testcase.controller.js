@@ -17,6 +17,7 @@ export const createTestCase = async (req, res) => {
       pre_conditions = "",
       post_conditions = "",
       attachments = "",
+      assignees = []
     } = req.body
 
     const testCase = new TestCase({
@@ -34,6 +35,7 @@ export const createTestCase = async (req, res) => {
       pre_conditions,
       post_conditions,
       attachments,
+      assignees
     })
 
     await testCase.save()
@@ -95,6 +97,7 @@ export const updateTestCase = async (req, res) => {
       pre_conditions = "",
       post_conditions = "",
       attachments = "",
+      assignees = []
     } = req.body
 
     await TestCase.findByIdAndUpdate(
@@ -114,6 +117,7 @@ export const updateTestCase = async (req, res) => {
         pre_conditions,
         post_conditions,
         attachments,
+        assignees
       }
     )
 
@@ -134,6 +138,22 @@ export const getAllTestCasesFromAProject = async (req, res) => {
 
     res.status(200).json(testCases)
 
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const getAllTestCasesAssignedToAUser = async (req, res) => {
+  try {
+    const { user_id } = req.params
+
+    const testCases = await TestCase.find({ assignees: user_id })
+
+    if (!testCases) {
+      return res.status(404).json({ message: "There are no test cases assigned for this user" })
+    }
+
+    res.status(200).json(testCases)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
