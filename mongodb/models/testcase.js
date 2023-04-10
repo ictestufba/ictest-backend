@@ -46,7 +46,7 @@ const TestCaseSchema = new mongoose.Schema(
     is_flaky: { type: Boolean, required: true },
     behavior: {
       type: String,
-      enum: ["positive", "negative", "destructive"],
+      enum: ["not_set", "positive", "negative", "destructive"],
       default: "not_set",
       required: true
     },
