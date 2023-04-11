@@ -9,7 +9,14 @@ export const createUser = async (req, res) => {
   try {
     //to-do: avatar precisa ser em formato de arquivo e
     //deve poder subir para o cloudinary
+
     const { name, email, password, avatar } = req.body;
+
+    const result = await User.findOne({ email: email })
+
+    if (result) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
     validateEmail(email);
 
