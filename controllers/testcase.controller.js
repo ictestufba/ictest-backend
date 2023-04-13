@@ -161,7 +161,6 @@ export const getAllTestCasesAssignedToAUser = async (req, res) => {
 
 export const assignTestCaseToUser = async (req, res) => {
   try {
-
     const { id, user_id } = req.params
     const testCase = await TestCase.findById(id)
 
