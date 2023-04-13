@@ -7,6 +7,7 @@ import connectDB from "./mongodb/connect.js";
 import { projectRouter } from "./routes/project.routes.js";
 import { suiteRouter } from "./routes/suite.routes.js";
 import { userRouter } from "./routes/user.routes.js";
+import { testCaseRouter } from "./routes/testcase.routes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use("/projects", projectRouter);
 app.use("/suites", suiteRouter);
 app.use("/users", userRouter);
+app.use("/test-cases", testCaseRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
