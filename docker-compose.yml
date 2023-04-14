@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:4.2
+    container_name: db-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ictest
+      MONGO_INITDB_ROOT_PASSWORD: ictest
+
+    ports:
+      - '${MONGODB_DB_PORT:-27017}:27017'
+
+    volumes:
+      - .data/db:/data/db
