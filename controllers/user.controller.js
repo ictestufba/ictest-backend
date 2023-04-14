@@ -53,9 +53,10 @@ export const getUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const user = await User.find({}, "_id name email avatar").exec();
+    const users = await User.find({}, "_id name email avatar").exec();
+    const amount = { amount: users.length }
 
-    res.status(200).json(user);
+    res.status(200).json([amount, users]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
