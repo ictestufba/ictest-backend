@@ -2,10 +2,11 @@
   "name": "ictest-backend",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +21,12 @@
     "mongoose": "^7.0.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.11",
     "eslint": "^8.36.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.4"
   }
 }
