@@ -6,7 +6,8 @@ import {
     getTestCaseDetails,
     updateTestCase,
     getAllTestCasesFromAProject,
-    getAllTestCasesAssignedToAUser
+    getAllTestCasesAssignedToAUser,
+    assignTestCaseToUser
 } from "../controllers/testcase.controller.js"
 
 const testCaseRouter = express.Router()
@@ -17,5 +18,6 @@ testCaseRouter.route("/:user_id/:cases").get(getAllTestCasesAssignedToAUser)
 testCaseRouter.route("/:id").delete(deleteTestCase)
 testCaseRouter.route("/:id").get(getTestCaseDetails)
 testCaseRouter.route("/:id").patch(updateTestCase)
+testCaseRouter.route("/:id/:user_id").patch(assignTestCaseToUser)
 
 export { testCaseRouter }

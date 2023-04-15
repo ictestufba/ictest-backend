@@ -158,3 +158,17 @@ export const getAllTestCasesAssignedToAUser = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+export const assignTestCaseToUser = async (req, res) => {
+  try {
+    const { id, user_id } = req.params
+    const testCase = await TestCase.findById(id)
+
+    testCase.assignees.push(user_id)
+    await testCase.save()
+
+    res.status(200).json({ testCase })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
