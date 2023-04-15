@@ -15,7 +15,8 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       enum: ["add_all", "add_specific", "dont_add"],
       required: true
-    }
+    },
+    members: [{ type: String, required: false }]
   },
   {
     timestamps: true

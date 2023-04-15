@@ -7,7 +7,8 @@ export const createProject = async (req, res) => {
       code,
       description = "",
       visibility,
-      member_access
+      member_access,
+      members = []
     } = req.body
 
     const project = new Project({
@@ -15,7 +16,8 @@ export const createProject = async (req, res) => {
       code,
       description,
       visibility,
-      member_access
+      member_access,
+      members
     })
 
     await project.save()
@@ -72,7 +74,7 @@ export const updateProject = async (req, res) => {
   try {
     const { id } = req.params
 
-    const { name, code, description, visibility, member_access } = req.body
+    const { name, code, description, visibility, member_access, members = [] } = req.body
 
     await Project.findByIdAndUpdate(
       { _id: id },
@@ -81,11 +83,26 @@ export const updateProject = async (req, res) => {
         code,
         description,
         visibility,
-        member_access
+        member_access,
+        members
       }
     )
 
     res.status(200).json({ message: "Project updated successfuly" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const addUserToProject = async (req, res) => {
+  try {
+    const { id, user_id } = req.params
+    const project = await Project.findById(id)
+
+    project.members.push(user_id)
+    await project.save()
+
+    res.status(200).json({ project })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
