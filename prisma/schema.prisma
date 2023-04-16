@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,9 +8,55 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  password_hash String
+  created_at    DateTime @default(now())
+
+  projects UsersOnProjectsWithRoles[]
 
   @@map("users")
+}
+
+enum Visibility {
+  private
+  public
+}
+
+enum MemberAccess {
+  add_all
+  add_specific
+  dont_add
+}
+
+model Project {
+  id            String       @id @default(uuid())
+  name          String
+  code          String
+  description   String?
+  visibility    Visibility   @default(private)
+  member_access MemberAccess
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+
+  members UsersOnProjectsWithRoles[]
+
+  @@map("projects")
+}
+
+enum Role {
+  member
+  admin
+}
+
+model UsersOnProjectsWithRoles {
+  user       User    @relation(fields: [user_id], references: [id])
+  user_id    String
+  project    Project @relation(fields: [project_id], references: [id])
+  project_id String
+  role       Role    @default(member)
+
+  @@id([user_id, project_id])
+  @@map("users_on_projects_with_roles")
 }
