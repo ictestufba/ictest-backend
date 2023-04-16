@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "4.12.0",
     "bcrypt": "5.1.0",
     "cloudinary": "1.36.1",
     "cors": "2.8.5",
@@ -29,6 +30,7 @@
     "@types/node": "18.15.11",
     "eslint": "8.38.0",
     "nodemon": "2.0.22",
+    "prisma": "4.12.0",
     "tsup": "6.7.0",
     "tsx": "3.12.6",
     "typescript": "5.0.4"
