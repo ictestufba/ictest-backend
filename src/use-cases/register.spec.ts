@@ -51,7 +51,7 @@ describe('Register Use Case', () => {
       avatar: 'avatar-url',
     })
 
-    expect(() =>
+    await expect(() =>
       registerUseCase.execute({
         name: 'John Doe',
         email,
