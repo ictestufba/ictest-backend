@@ -31,4 +31,10 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 
     return project
   }
+
+  async list() {
+    const projects = this.items
+
+    return projects
+  }
 }
