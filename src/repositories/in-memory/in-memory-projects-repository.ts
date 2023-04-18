@@ -41,4 +41,12 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   async findByIdAndDelete(projectId: string) {
     this.items = this.items.filter((item) => item.id !== projectId)
   }
+
+  async findByIdAndUpdate(projectId: string, data: Partial<Project>) {
+    const index = this.items.findIndex((project) => project.id === projectId)
+
+    this.items[index] = { ...this.items[index], ...data }
+
+    return this.items[index]
+  }
 }

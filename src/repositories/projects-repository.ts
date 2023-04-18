@@ -5,4 +5,8 @@ export interface ProjectsRepository {
   create(data: Prisma.ProjectCreateInput): Promise<Project>
   list(): Promise<Project[]>
   findByIdAndDelete(projectId: string): Promise<void>
+  findByIdAndUpdate(
+    projectId: string,
+    data: Prisma.ProjectUpdateInput,
+  ): Promise<Project>
 }
