@@ -37,4 +37,8 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 
     return projects
   }
+
+  async findByIdAndDelete(projectId: string) {
+    this.items = this.items.filter((item) => item.id !== projectId)
+  }
 }
