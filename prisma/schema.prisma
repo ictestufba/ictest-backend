@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String     @unique
   password_hash String
   avatar        String?
-  created_at    DateTime @default(now())
+  test_cases    TestCase[]
+  created_at    DateTime   @default(now())
 
   projects UsersOnProjectsWithRoles[]
 
@@ -38,10 +39,12 @@ model Project {
   description   String?
   visibility    Visibility   @default(private)
   member_access MemberAccess
+  suites        Suite[]
   created_at    DateTime     @default(now())
   updated_at    DateTime     @updatedAt
 
-  members UsersOnProjectsWithRoles[]
+  members  UsersOnProjectsWithRoles[]
+  TestCase TestCase[]
 
   @@map("projects")
 }
@@ -60,4 +63,36 @@ model UsersOnProjectsWithRoles {
 
   @@id([user_id, project_id])
   @@map("users_on_projects_with_roles")
+}
+
+model Suite {
+  id             String     @id @default(uuid())
+  title          String
+  description    String?
+  pre_conditions String?
+  test_cases     TestCase[]
+
+  Project    Project? @relation(fields: [project_id], references: [id])
+  project_id String?
+}
+
+model TestCase {
+  id                String   @id @default(uuid())
+  title             String
+  status            String
+  description       String?
+  Project           Project? @relation(fields: [project_id], references: [id])
+  project_id        String?
+  Suite             Suite?   @relation(fields: [suite_id], references: [id])
+  suite_id          String?
+  severity          String
+  priority          String
+  type              String
+  is_flaky          Boolean
+  behavior          String
+  automation_status String
+  pre_conditions    String?
+  post_conditions   String?
+  User              User?    @relation(fields: [user_id], references: [id])
+  user_id           String?
 }
