@@ -40,7 +40,7 @@ describe('Update Project Use Case', () => {
       member_access: 'add_all',
     })
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         projectId: 'non-existing-id',
         data: {

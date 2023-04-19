@@ -2,8 +2,10 @@ import { Prisma, Project } from '@prisma/client'
 import { ProjectsRepository } from '../projects-repository'
 import { randomUUID } from 'node:crypto'
 
+type ProjectWithMembers = Project & { members: string[] }
+
 export class InMemoryProjectsRepository implements ProjectsRepository {
-  public items: Project[] = []
+  public items: ProjectWithMembers[] = []
 
   async findById(id: string) {
     const project = this.items.find((item) => item.id === id)
@@ -23,6 +25,7 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
       description: data.description ?? null,
       visibility: data.visibility ?? 'private',
       member_access: data.member_access ?? 'add_all',
+      members: [],
       created_at: new Date(),
       updated_at: new Date(),
     }
@@ -52,5 +55,17 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     this.items[index] = { ...this.items[index], ...data }
 
     return this.items[index]
+  }
+
+  async addMember(projectId: string, userEmail: string) {
+    const index = this.items.findIndex((project) => project.id === projectId)
+
+    if (index === -1) {
+      return null
+    }
+
+    this.items[index].members.push(userEmail)
+
+    return userEmail
   }
 }
