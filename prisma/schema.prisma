@@ -71,19 +71,20 @@ model Suite {
   description    String?
   pre_conditions String?
   test_cases     TestCase[]
-
-  Project    Project? @relation(fields: [project_id], references: [id])
-  project_id String?
+  Project        Project?   @relation(fields: [project_id], references: [id])
+  project_id     String?
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
 }
 
 model TestCase {
-  id                String   @id @default(uuid())
+  id                String       @id @default(uuid())
   title             String
   status            String
   description       String?
-  Project           Project? @relation(fields: [project_id], references: [id])
+  Project           Project?     @relation(fields: [project_id], references: [id])
   project_id        String?
-  Suite             Suite?   @relation(fields: [suite_id], references: [id])
+  Suite             Suite?       @relation(fields: [suite_id], references: [id])
   suite_id          String?
   severity          String
   priority          String
@@ -93,6 +94,19 @@ model TestCase {
   automation_status String
   pre_conditions    String?
   post_conditions   String?
-  User              User?    @relation(fields: [user_id], references: [id])
+  attachments       Attachment[]
+  User              User?        @relation(fields: [user_id], references: [id])
   user_id           String?
+  created_at        DateTime     @default(now())
+  updated_at        DateTime     @updatedAt
+}
+
+model Attachment {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  url          String
+  TestCase     TestCase @relation(fields: [test_case_id], references: [id])
+  test_case_id String
+  created_at   DateTime @default(now())
 }
