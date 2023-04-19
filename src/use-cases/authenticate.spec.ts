@@ -45,7 +45,7 @@ describe('Authenticate Use Case', () => {
       avatar: 'avatar-url',
     })
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         email: 'johndoe@example.com',
         password: '123123',
