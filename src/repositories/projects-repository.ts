@@ -8,5 +8,5 @@ export interface ProjectsRepository {
   findByIdAndUpdate(
     projectId: string,
     data: Prisma.ProjectUpdateInput,
-  ): Promise<Project>
+  ): Promise<Project | null>
 }

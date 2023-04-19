@@ -45,6 +45,10 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   async findByIdAndUpdate(projectId: string, data: Partial<Project>) {
     const index = this.items.findIndex((project) => project.id === projectId)
 
+    if (index === -1) {
+      return null
+    }
+
     this.items[index] = { ...this.items[index], ...data }
 
     return this.items[index]
