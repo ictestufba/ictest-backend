@@ -21,4 +21,10 @@ export class InMemorySuitesRepository implements SuitesRepository {
 
     return suite
   }
+
+  async getSuitesByProjectId(projectId: string) {
+    const suites = this.items.filter((item) => item.project_id === projectId)
+
+    return suites
+  }
 }
