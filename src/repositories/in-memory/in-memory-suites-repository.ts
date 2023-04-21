@@ -41,4 +41,16 @@ export class InMemorySuitesRepository implements SuitesRepository {
   async findByIdAndDelete(suiteId: string) {
     this.items = this.items.filter((item) => item.id !== suiteId)
   }
+
+  async findByIdAndUpdate(suiteId: string, data: Partial<Suite>) {
+    const index = this.items.findIndex((suite) => suite.id === suiteId)
+
+    if (index === -1) {
+      return null
+    }
+
+    this.items[index] = { ...this.items[index], ...data }
+
+    return this.items[index]
+  }
 }
