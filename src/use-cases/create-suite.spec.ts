@@ -8,7 +8,7 @@ let projectsRepository: InMemoryProjectsRepository
 let suitesRepository: InMemorySuitesRepository
 let sut: CreateSuiteUseCase
 
-describe('Update Project Use Case', () => {
+describe('Create Suite Use Case', () => {
   beforeEach(() => {
     projectsRepository = new InMemoryProjectsRepository()
     suitesRepository = new InMemorySuitesRepository()
