@@ -8,7 +8,7 @@ let projectsRepository: InMemoryProjectsRepository
 let suitesRepository: InMemorySuitesRepository
 let sut: DeleteSuiteUseCase
 
-describe('Delete Project Use Case', () => {
+describe('Delete Suite Use Case', () => {
   beforeEach(() => {
     projectsRepository = new InMemoryProjectsRepository()
     suitesRepository = new InMemorySuitesRepository()
@@ -42,16 +42,10 @@ describe('Delete Project Use Case', () => {
       suiteId: suite1.id,
     })
 
-    const suitesFromProject = await suitesRepository.getSuitesByProjectId(
-      project.id,
-    )
+    const suites = await suitesRepository.getSuitesByProjectId(project.id)
 
-    console.log(suitesFromProject)
-
-    expect(suitesFromProject).toHaveLength(1)
-    expect(suitesFromProject).toEqual([
-      expect.objectContaining({ title: 'Suite 2' }),
-    ])
+    expect(suites).toHaveLength(1)
+    expect(suites).toEqual([expect.objectContaining({ title: 'Suite 2' })])
   })
 
   it('should not be able to delete a non-existing suite', async () => {

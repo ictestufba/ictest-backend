@@ -5,6 +5,16 @@ import { randomUUID } from 'node:crypto'
 export class InMemoryTestCasesRepository implements TestCasesRepository {
   public items: TestCase[] = []
 
+  async findById(id: string) {
+    const testCase = this.items.find((item) => item.id === id)
+
+    if (!testCase) {
+      return null
+    }
+
+    return testCase
+  }
+
   async create(data: Prisma.TestCaseUncheckedCreateInput) {
     const testCase = {
       id: data.id ?? randomUUID(),
@@ -30,5 +40,15 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
     this.items.push(testCase)
 
     return testCase
+  }
+
+  async delete(testCaseId: string) {
+    this.items = this.items.filter((item) => item.id !== testCaseId)
+  }
+
+  async getTestCasesBySuiteId(suiteId: string): Promise<TestCase[]> {
+    const testCases = this.items.filter((item) => item.suite_id === suiteId)
+
+    return testCases
   }
 }

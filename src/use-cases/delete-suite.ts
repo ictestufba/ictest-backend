@@ -9,9 +9,9 @@ export class DeleteSuiteUseCase {
   constructor(private suitesRepository: SuitesRepository) {}
 
   async execute({ suiteId }: DeleteSuiteUseCaseRequest): Promise<void> {
-    const projectToBeDeleted = await this.suitesRepository.findById(suiteId)
+    const suiteToBeDeleted = await this.suitesRepository.findById(suiteId)
 
-    if (!projectToBeDeleted) {
+    if (!suiteToBeDeleted) {
       throw new ResourceNotFoundError()
     }
 
