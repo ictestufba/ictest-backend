@@ -49,7 +49,7 @@ describe('Get Suites From Project Use Case', () => {
     ])
   })
 
-  it('should be able to get the suites from a non-existing project', async () => {
+  it('should not be able to get the suites from a non-existing project', async () => {
     const project = await projectsRepository.create({
       name: 'Project 1',
       code: 'PROJ1',
