@@ -5,4 +5,8 @@ export interface TestCasesRepository {
   findById(id: string): Promise<TestCase | null>
   delete(testCaseId: string): Promise<void>
   getTestCasesBySuiteId(suiteId: string): Promise<TestCase[]>
+  update(
+    testCaseId: string,
+    data: Prisma.TestCaseUpdateInput,
+  ): Promise<TestCase | null>
 }

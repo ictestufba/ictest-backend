@@ -51,4 +51,16 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
 
     return testCases
   }
+
+  async update(testCaseId: string, data: Partial<TestCase>) {
+    const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
+
+    if (index === -1) {
+      return null
+    }
+
+    this.items[index] = { ...this.items[index], ...data }
+
+    return this.items[index]
+  }
 }
