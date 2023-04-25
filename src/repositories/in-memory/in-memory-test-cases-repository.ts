@@ -75,4 +75,12 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
 
     return this.items[index]
   }
+
+  async getTestCasesAssignedToUser(userEmail: string) {
+    const testCases = this.items.filter(
+      (testCase) => testCase.assigned_to === userEmail,
+    )
+
+    return testCases
+  }
 }
