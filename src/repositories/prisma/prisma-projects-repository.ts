@@ -29,7 +29,11 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   async findByIdAndDelete(projectId: string) {
-    throw new Error('Method not implemented.')
+    await prisma.project.delete({
+      where: {
+        id: projectId,
+      },
+    })
   }
 
   async findByIdAndUpdate(projectId: string, data: Prisma.ProjectUpdateInput) {
