@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(uuid())
+  name          String
+  email         String     @unique
+  password_hash String
+  avatar        String?
+  test_cases    TestCase[]
+  created_at    DateTime   @default(now())
+
+  projects UsersOnProjectsWithRoles[]
+
+  @@map("users")
+}
+
+enum Visibility {
+  private
+  public
+}
+
+enum MemberAccess {
+  add_all
+  add_specific
+  dont_add
+}
+
+model Project {
+  id            String       @id @default(uuid())
+  name          String
+  code          String
+  description   String?
+  visibility    Visibility   @default(private)
+  member_access MemberAccess
+  suites        Suite[]
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+
+  members  UsersOnProjectsWithRoles[]
+  TestCase TestCase[]
+
+  @@map("projects")
+}
+
+enum Role {
+  member
+  admin
+}
+
+model UsersOnProjectsWithRoles {
+  user       User    @relation(fields: [user_id], references: [id])
+  user_id    String
+  project    Project @relation(fields: [project_id], references: [id])
+  project_id String
+  role       Role    @default(member)
+
+  @@id([user_id, project_id])
+  @@map("users_on_projects_with_roles")
+}
+
+model Suite {
+  id             String     @id @default(uuid())
+  title          String
+  description    String?
+  pre_conditions String?
+  test_cases     TestCase[]
+  Project        Project?   @relation(fields: [project_id], references: [id])
+  project_id     String?
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+}
+
+enum Status {
+  actual
+  draft
+  deprecated
+}
+
+enum Severity {
+  not_set
+  blocker
+  critical
+  major
+  normal
+  minor
+  trivial
+}
+
+enum Priority {
+  not_set
+  high
+  medium
+  low
+}
+
+enum Type {
+  other
+  functional
+  smoke
+  regression
+  security
+  usability
+  performance
+  acceptance
+  compatibility
+  integration
+  exploratory
+}
+
+enum Layer {
+  not_set
+  e2e
+  api
+  unit
+}
+
+enum Behavior {
+  not_set
+  positive
+  negative
+  destructive
+}
+
+enum AutomationStatus {
+  not_automated
+  to_be_automated
+  automated
+}
+
+model TestCase {
+  id                String           @id @default(uuid())
+  title             String
+  status            Status           @default(actual)
+  description       String?
+  Project           Project?         @relation(fields: [project_id], references: [id])
+  project_id        String?
+  Suite             Suite?           @relation(fields: [suite_id], references: [id])
+  suite_id          String?
+  severity          Severity         @default(normal)
+  priority          Priority         @default(not_set)
+  type              Type             @default(other)
+  layer             Layer            @default(not_set)
+  is_flaky          Boolean
+  behavior          Behavior         @default(not_set)
+  automation_status AutomationStatus @default(not_automated)
+  pre_conditions    String?
+  post_conditions   String?
+  attachments       Attachment[]
+  User              User?            @relation(fields: [assigned_to], references: [id])
+  assigned_to       String?
+  created_at        DateTime         @default(now())
+  updated_at        DateTime         @updatedAt
+}
+
+model Step {
+  id              String     @id @default(uuid())
+  action          String
+  expected_result String
+  attachment      Attachment @relation(fields: [attachment_id], references: [id])
+  attachment_id   String
+}
+
+model Attachment {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  url          String
+  TestCase     TestCase @relation(fields: [test_case_id], references: [id])
+  test_case_id String
+  created_at   DateTime @default(now())
+  Step         Step[]
+}

@@ -2,25 +2,49 @@
   "name": "ictest-backend",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "cloudinary": "^1.35.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "email-validator": "^2.0.4",
-    "express": "^4.18.2",
-    "mongoose": "^7.0.3"
+    "@fastify/jwt": "6.7.1",
+    "@prisma/client": "4.12.0",
+    "bcrypt": "5.1.0",
+    "bcryptjs": "2.4.3",
+    "cloudinary": "1.36.1",
+    "cors": "2.8.5",
+    "dotenv": "16.0.3",
+    "email-validator": "2.0.4",
+    "express": "4.18.2",
+    "fastify": "4.15.0",
+    "mongoose": "7.0.3",
+    "zod": "3.21.4"
   },
   "devDependencies": {
-    "eslint": "^8.36.0",
-    "nodemon": "^2.0.22"
+    "@rocketseat/eslint-config": "1.2.0",
+    "@types/bcryptjs": "2.4.2",
+    "@types/express": "4.17.17",
+    "@types/node": "18.15.11",
+    "@vitest/coverage-c8": "0.30.1",
+    "@vitest/ui": "0.30.1",
+    "eslint": "8.38.0",
+    "nodemon": "2.0.22",
+    "prisma": "4.12.0",
+    "tsup": "6.7.0",
+    "tsx": "3.12.6",
+    "typescript": "5.0.4",
+    "vite-tsconfig-paths": "4.2.0",
+    "vitest": "0.30.1"
   }
 }
