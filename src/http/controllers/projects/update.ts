@@ -21,10 +21,10 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 
   const createProjectUseCase = makeUpdateProjectUseCase()
 
-  await createProjectUseCase.execute({
+  const project = await createProjectUseCase.execute({
     projectId,
     data,
   })
 
-  return reply.status(201).send()
+  return reply.status(200).send(project)
 }
