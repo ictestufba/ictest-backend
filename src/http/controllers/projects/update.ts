@@ -19,9 +19,9 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 
   const { data } = updateProjectBodySchema.parse(request.body)
 
-  const createProjectUseCase = makeUpdateProjectUseCase()
+  const updateProjectUseCase = makeUpdateProjectUseCase()
 
-  const project = await createProjectUseCase.execute({
+  const project = await updateProjectUseCase.execute({
     projectId,
     data,
   })
