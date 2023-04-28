@@ -11,9 +11,9 @@ export async function details(request: FastifyRequest, reply: FastifyReply) {
 
   const getProjectDetailsUseCase = makeGetProjectDetailsUseCase()
 
-  await getProjectDetailsUseCase.execute({
+  const project = await getProjectDetailsUseCase.execute({
     projectId,
   })
 
-  return reply.status(201).send()
+  return reply.status(200).send(project)
 }

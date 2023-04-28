@@ -16,7 +16,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const createProjectUseCase = makeCreateProjectUseCase()
 
-  await createProjectUseCase.execute({
+  const project = await createProjectUseCase.execute({
     name,
     code,
     description,
@@ -24,5 +24,5 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     member_access,
   })
 
-  return reply.status(201).send()
+  return reply.status(201).send(project)
 }
