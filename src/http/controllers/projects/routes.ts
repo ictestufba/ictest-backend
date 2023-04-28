@@ -9,7 +9,7 @@ import { update } from './update'
 export async function projectsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
 
-  app.get('/projects/list', list)
+  app.get('/projects', list)
   app.get('/projects/:projectId', details)
 
   app.post('/projects', create)
