@@ -5,6 +5,7 @@ import { list } from './list'
 import { details } from './details'
 import { create } from './create'
 import { update } from './update'
+import { deleteProject } from './delete-project'
 
 export async function projectsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
@@ -14,4 +15,5 @@ export async function projectsRoutes(app: FastifyInstance) {
 
   app.post('/projects', create)
   app.patch('/projects/:projectId/update', update)
+  app.delete('/projects/:projectId', deleteProject)
 }
