@@ -53,7 +53,6 @@ describe('Create Test Case Use Case', () => {
       is_flaky: false,
       layer: 'not_set',
       type: 'other',
-      assigned_to: null,
     })
 
     expect(test_case.id).toEqual(expect.any(String))
@@ -92,7 +91,6 @@ describe('Create Test Case Use Case', () => {
         is_flaky: false,
         layer: 'not_set',
         type: 'other',
-        assigned_to: null,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
@@ -129,7 +127,6 @@ describe('Create Test Case Use Case', () => {
         is_flaky: false,
         layer: 'not_set',
         type: 'other',
-        assigned_to: null,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
