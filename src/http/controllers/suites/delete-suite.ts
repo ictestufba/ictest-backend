@@ -12,8 +12,6 @@ export async function deleteSuite(
 
   const { suiteId } = deleteSuiteParamsSchema.parse(request.params)
 
-  console.log(suiteId)
-
   const deleteSuiteUseCase = makeDeleteSuiteUseCase()
 
   const suite = await deleteSuiteUseCase.execute({
