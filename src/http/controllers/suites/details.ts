@@ -3,11 +3,11 @@ import { z } from 'zod'
 import { makeGetSuiteDetailsUseCase } from '@/use-cases/factories/make-get-suite-details-use-case'
 
 export async function details(request: FastifyRequest, reply: FastifyReply) {
-  const getProjectDetailsParamsSchema = z.object({
+  const getSuiteDetailsParamsSchema = z.object({
     suiteId: z.string().uuid(),
   })
 
-  const { suiteId } = getProjectDetailsParamsSchema.parse(request.params)
+  const { suiteId } = getSuiteDetailsParamsSchema.parse(request.params)
 
   const getSuiteDetailsUseCase = makeGetSuiteDetailsUseCase()
 
