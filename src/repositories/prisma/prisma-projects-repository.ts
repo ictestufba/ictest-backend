@@ -9,6 +9,9 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       where: {
         id,
       },
+      include: {
+        members: true,
+      },
     })
 
     return project
@@ -66,11 +69,9 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
       data: {
         members: {
-          connect: {
-            user_id_project_id: {
-              project_id: projectId,
-              user_id: userId,
-            },
+          create: {
+            user_id: userId,
+            role: 'member',
           },
         },
       },

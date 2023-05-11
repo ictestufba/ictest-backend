@@ -28,7 +28,6 @@ interface CreateTestCaseUseCaseRequest {
   automation_status: AutomationStatus
   pre_conditions: string | null
   post_conditions: string | null
-  assigned_to: string | null
 }
 
 interface CreateTestCaseUseCaseResponse {
@@ -57,7 +56,6 @@ export class CreateTestCaseUseCase {
     automation_status,
     pre_conditions,
     post_conditions,
-    assigned_to,
   }: CreateTestCaseUseCaseRequest): Promise<CreateTestCaseUseCaseResponse> {
     const project = await this.projectsRepository.findById(project_id)
 
@@ -86,7 +84,6 @@ export class CreateTestCaseUseCase {
       automation_status,
       pre_conditions,
       post_conditions,
-      assigned_to,
     })
 
     return {
