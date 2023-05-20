@@ -5,7 +5,6 @@ import { makeCreateTestCaseUseCase } from '@/use-cases/factories/make-create-tes
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createTestCaseBodySchema = z.object({
     project_id: z.string().uuid(),
-    suite_id: z.string().uuid(),
     title: z.string(),
     status: z.enum(['actual', 'draft', 'deprecated']).default('actual'),
     description: z.string().nullable(),
@@ -50,7 +49,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const {
     project_id,
-    suite_id,
     title,
     status,
     description,
@@ -69,7 +67,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const testCase = await createTestCaseUseCase.execute({
     project_id,
-    suite_id,
     title,
     status,
     description,

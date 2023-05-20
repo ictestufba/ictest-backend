@@ -8,7 +8,6 @@ import { update } from './update'
 import { deleteProject } from './delete-project'
 import { addMember } from './add-member'
 import { getTestCases } from './get-test-cases'
-import { getSuites } from './get-suites'
 
 export async function projectsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
@@ -16,7 +15,6 @@ export async function projectsRoutes(app: FastifyInstance) {
   app.get('/projects', list)
   app.get('/projects/:projectId', details)
   app.get('/projects/:projectId/test-cases', getTestCases)
-  app.get('/projects/:project_id/suites', getSuites)
 
   app.post('/projects', create)
   app.patch('/projects/:projectId/update', update)
