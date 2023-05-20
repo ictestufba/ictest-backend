@@ -31,12 +31,4 @@ export class PrismaSuitesRepository implements SuitesRepository {
 
     return suite
   }
-
-  async findByIdAndDelete(suiteId: string) {
-    await prisma.suite.delete({
-      where: {
-        id: suiteId,
-      },
-    })
-  }
 }

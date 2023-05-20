@@ -37,8 +37,4 @@ export class InMemorySuitesRepository implements SuitesRepository {
 
     return suites
   }
-
-  async findByIdAndDelete(suiteId: string) {
-    this.items = this.items.filter((item) => item.id !== suiteId)
-  }
 }
