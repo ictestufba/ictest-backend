@@ -39,15 +39,4 @@ export class PrismaSuitesRepository implements SuitesRepository {
       },
     })
   }
-
-  async findByIdAndUpdate(suiteId: string, data: Prisma.SuiteUpdateInput) {
-    const suite = await prisma.suite.update({
-      where: {
-        id: suiteId,
-      },
-      data,
-    })
-
-    return suite
-  }
 }
