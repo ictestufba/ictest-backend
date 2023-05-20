@@ -63,12 +63,6 @@ export class CreateTestCaseUseCase {
       throw new ResourceNotFoundError()
     }
 
-    const suite = await this.suitesRepository.findById(suite_id)
-
-    if (!suite) {
-      throw new ResourceNotFoundError()
-    }
-
     const test_case = await this.testCasesRepository.create({
       project_id,
       suite_id,

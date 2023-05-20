@@ -30,10 +30,10 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     })
   }
 
-  async getTestCasesBySuiteId(suiteId: string) {
+  async getTestCasesByProjectId(projectId: string) {
     const testCases = await prisma.testCase.findMany({
       where: {
-        suite_id: suiteId,
+        project_id: projectId,
       },
     })
 

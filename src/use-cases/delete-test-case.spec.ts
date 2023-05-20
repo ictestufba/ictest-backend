@@ -74,7 +74,9 @@ describe('Delete Test Case Use Case', () => {
       testCaseId: testCase1.id,
     })
 
-    const testCases = await testCasesRepository.getTestCasesBySuiteId(suite.id)
+    const testCases = await testCasesRepository.getTestCasesByProjectId(
+      project.id,
+    )
 
     expect(testCases).toHaveLength(1)
     expect(testCases).toEqual([

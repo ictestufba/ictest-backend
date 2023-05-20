@@ -46,8 +46,8 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
     this.items = this.items.filter((item) => item.id !== testCaseId)
   }
 
-  async getTestCasesBySuiteId(suiteId: string): Promise<TestCase[]> {
-    const testCases = this.items.filter((item) => item.suite_id === suiteId)
+  async getTestCasesByProjectId(projectId: string): Promise<TestCase[]> {
+    const testCases = this.items.filter((item) => item.project_id === projectId)
 
     return testCases
   }

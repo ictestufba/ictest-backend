@@ -94,40 +94,4 @@ describe('Create Test Case Use Case', () => {
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
-
-  it('should not be able to create a test case with a non-existing suite', async () => {
-    const project = await projectsRepository.create({
-      name: 'Project 1',
-      code: 'PROJ1',
-      description: null,
-      visibility: 'private',
-      member_access: 'add_all',
-    })
-
-    await suitesRepository.create({
-      project_id: project.id,
-      title: 'Suite 1',
-      description: null,
-      pre_conditions: null,
-    })
-
-    await expect(() =>
-      sut.execute({
-        project_id: project.id,
-        suite_id: 'non-existing-suite-id',
-        title: 'Test Case 1',
-        status: 'actual',
-        description: null,
-        pre_conditions: null,
-        post_conditions: null,
-        severity: 'not_set',
-        priority: 'not_set',
-        automation_status: 'not_automated',
-        behavior: 'not_set',
-        is_flaky: false,
-        layer: 'not_set',
-        type: 'other',
-      }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError)
-  })
 })

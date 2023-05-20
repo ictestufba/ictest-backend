@@ -5,16 +5,6 @@ import { randomUUID } from 'node:crypto'
 export class InMemorySuitesRepository implements SuitesRepository {
   public items: Suite[] = []
 
-  async findById(id: string) {
-    const suite = this.items.find((item) => item.id === id)
-
-    if (!suite) {
-      return null
-    }
-
-    return suite
-  }
-
   async create(data: Prisma.SuiteUncheckedCreateInput) {
     const suite = {
       id: data.id ?? randomUUID(),

@@ -55,7 +55,7 @@ describe('Delete Test Case (e2e)', () => {
     const testCaseId = createdTestCaseResponse.body.test_case.id
 
     const responseBeforeDelete = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
 
     expect(responseBeforeDelete.body.testCases).toHaveLength(1)
@@ -65,7 +65,7 @@ describe('Delete Test Case (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
 
     const responseAfterDelete = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
 
     expect(responseAfterDelete.body.testCases).toHaveLength(0)

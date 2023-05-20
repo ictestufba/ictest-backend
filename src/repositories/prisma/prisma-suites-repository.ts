@@ -21,14 +21,4 @@ export class PrismaSuitesRepository implements SuitesRepository {
 
     return suites
   }
-
-  async findById(id: string) {
-    const suite = await prisma.suite.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    return suite
-  }
 }

@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Get Suite Test Cases (e2e)', () => {
+describe('Get Project Test Cases (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,7 +12,7 @@ describe('Get Suite Test Cases (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to get the test cases of a suite', async () => {
+  it('should be able to get the test cases of a project', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     const createdProjectResponse = await request(app.server)
@@ -55,7 +55,7 @@ describe('Get Suite Test Cases (e2e)', () => {
     const testCaseId = createdTestCaseResponse.body.test_case.id
 
     const response = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
