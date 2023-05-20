@@ -1,12 +1,12 @@
 import { PrismaProjectsRepository } from '@/repositories/prisma/prisma-projects-repository'
 import { PrismaTestCasesRepository } from '@/repositories/prisma/prisma-test-cases-repository'
-import { CreateTestCaseUseCase } from '../create-test-case'
+import { GetTestCasesFromProjectUseCase } from '../get-test-cases-from-project'
 
-export function makeCreateTestCaseUseCase() {
+export function makeGetTestCasesFromProjectUseCase() {
   const projectsRepository = new PrismaProjectsRepository()
   const testCasesRepository = new PrismaTestCasesRepository()
 
-  const useCase = new CreateTestCaseUseCase(
+  const useCase = new GetTestCasesFromProjectUseCase(
     projectsRepository,
     testCasesRepository,
   )

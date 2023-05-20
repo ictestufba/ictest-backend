@@ -1,34 +1,35 @@
-import { InMemorySuitesRepository } from '@/repositories/in-memory/in-memory-suites-repository'
+import { InMemoryProjectsRepository } from '@/repositories/in-memory/in-memory-projects-repository'
 import { InMemoryTestCasesRepository } from '@/repositories/in-memory/in-memory-test-cases-repository'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { GetTestCasesFromSuiteUseCase } from './get-test-cases-from-suite'
+import { GetTestCasesFromProjectUseCase } from './get-test-cases-from-project'
 import { expect, describe, it, beforeEach } from 'vitest'
 
-let suitesRepository: InMemorySuitesRepository
+let projectsRepository: InMemoryProjectsRepository
 let testCasesRepository: InMemoryTestCasesRepository
-let sut: GetTestCasesFromSuiteUseCase
+let sut: GetTestCasesFromProjectUseCase
 
-describe('Get Test Cases From Suite Use Case', () => {
+describe('Get Test Cases From Project Use Case', () => {
   beforeEach(() => {
-    suitesRepository = new InMemorySuitesRepository()
+    projectsRepository = new InMemoryProjectsRepository()
     testCasesRepository = new InMemoryTestCasesRepository()
-    sut = new GetTestCasesFromSuiteUseCase(
-      suitesRepository,
+    sut = new GetTestCasesFromProjectUseCase(
+      projectsRepository,
       testCasesRepository,
     )
   })
 
-  it('should be able to get the test cases from a specific suite', async () => {
-    const suite = await suitesRepository.create({
-      project_id: 'mock-project-id',
-      title: 'Suite 1',
+  it('should be able to get the test cases from a specific project', async () => {
+    const project = await projectsRepository.create({
+      name: 'Project 1',
+      code: 'PROJ1',
       description: null,
-      pre_conditions: null,
+      visibility: 'private',
+      member_access: 'add_all',
     })
 
     await testCasesRepository.create({
-      project_id: 'mock-project-id',
-      suite_id: suite.id,
+      project_id: project.id,
+      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
       status: 'actual',
       description: null,
@@ -45,8 +46,8 @@ describe('Get Test Cases From Suite Use Case', () => {
     })
 
     await testCasesRepository.create({
-      project_id: 'mock-project-id',
-      suite_id: suite.id,
+      project_id: project.id,
+      suite_id: 'mock-suite-id',
       title: 'Test Case 2',
       status: 'actual',
       description: null,
@@ -63,7 +64,7 @@ describe('Get Test Cases From Suite Use Case', () => {
     })
 
     const { testCases } = await sut.execute({
-      suiteId: suite.id,
+      projectId: project.id,
     })
 
     expect(testCases).toHaveLength(2)
@@ -73,35 +74,10 @@ describe('Get Test Cases From Suite Use Case', () => {
     ])
   })
 
-  it('should not be able to get the test cases from a non-existing suite', async () => {
-    const suite = await suitesRepository.create({
-      project_id: 'mock-project-id',
-      title: 'Suite 1',
-      description: null,
-      pre_conditions: null,
-    })
-
-    await testCasesRepository.create({
-      project_id: 'mock-project-id',
-      suite_id: suite.id,
-      title: 'Test Case 2',
-      status: 'actual',
-      description: null,
-      pre_conditions: null,
-      post_conditions: null,
-      severity: 'not_set',
-      priority: 'not_set',
-      automation_status: 'not_automated',
-      behavior: 'not_set',
-      is_flaky: false,
-      layer: 'not_set',
-      type: 'other',
-      assigned_to: null,
-    })
-
+  it('should not be able to get the test cases from a non-existing project', async () => {
     await expect(() =>
       sut.execute({
-        suiteId: 'non-existing-suite-id',
+        projectId: 'non-existing-project-id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

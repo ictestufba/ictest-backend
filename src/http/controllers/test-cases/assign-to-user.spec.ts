@@ -34,24 +34,11 @@ describe('Assign Test Case To User (e2e)', () => {
 
     const projectId = createProjectResponse.body.project.id
 
-    const createSuiteResponse = await request(app.server)
-      .post('/suites')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        project_id: projectId,
-        title: 'Suite 1',
-        description: 'Description of suite 1',
-        pre_conditions: 'Pre-conditions of suite 1',
-      })
-
-    const suiteId = createSuiteResponse.body.suite.id
-
     const createTestCaseResponse = await request(app.server)
       .post('/test-cases')
       .set('Authorization', `Bearer ${token}`)
       .send({
         project_id: projectId,
-        suite_id: suiteId,
         title: 'Test Case 1',
         status: 'actual',
         description: 'Description of test case 1',

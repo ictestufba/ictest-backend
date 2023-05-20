@@ -9,13 +9,11 @@ import {
   AutomationStatus,
 } from '@prisma/client'
 import { ProjectsRepository } from '@/repositories/projects-repository'
-import { SuitesRepository } from '@/repositories/suites-repository'
 import { TestCasesRepository } from '@/repositories/test-cases-repository'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface CreateTestCaseUseCaseRequest {
   project_id: string
-  suite_id: string
   title: string
   status: Status
   description: string | null
@@ -37,13 +35,11 @@ interface CreateTestCaseUseCaseResponse {
 export class CreateTestCaseUseCase {
   constructor(
     private projectsRepository: ProjectsRepository,
-    private suitesRepository: SuitesRepository,
     private testCasesRepository: TestCasesRepository,
   ) {}
 
   async execute({
     project_id,
-    suite_id,
     title,
     status,
     description,
@@ -63,15 +59,8 @@ export class CreateTestCaseUseCase {
       throw new ResourceNotFoundError()
     }
 
-    const suite = await this.suitesRepository.findById(suite_id)
-
-    if (!suite) {
-      throw new ResourceNotFoundError()
-    }
-
     const test_case = await this.testCasesRepository.create({
       project_id,
-      suite_id,
       title,
       status,
       description,

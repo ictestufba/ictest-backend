@@ -39,12 +39,11 @@ model Project {
   description   String?
   visibility    Visibility   @default(private)
   member_access MemberAccess
-  suites        Suite[]
+  test_cases    TestCase[]
   created_at    DateTime     @default(now())
   updated_at    DateTime     @updatedAt
 
-  members  UsersOnProjectsWithRoles[]
-  TestCase TestCase[]
+  members UsersOnProjectsWithRoles[]
 
   @@map("projects")
 }
@@ -63,18 +62,6 @@ model UsersOnProjectsWithRoles {
 
   @@id([user_id, project_id])
   @@map("users_on_projects_with_roles")
-}
-
-model Suite {
-  id             String     @id @default(uuid())
-  title          String
-  description    String?
-  pre_conditions String?
-  test_cases     TestCase[]
-  Project        Project?   @relation(fields: [project_id], references: [id])
-  project_id     String?
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
 }
 
 enum Status {
@@ -141,8 +128,6 @@ model TestCase {
   description       String?
   Project           Project?         @relation(fields: [project_id], references: [id])
   project_id        String?
-  Suite             Suite?           @relation(fields: [suite_id], references: [id])
-  suite_id          String?
   severity          Severity         @default(normal)
   priority          Priority         @default(not_set)
   type              Type             @default(other)

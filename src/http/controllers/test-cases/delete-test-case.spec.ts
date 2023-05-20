@@ -28,24 +28,11 @@ describe('Delete Test Case (e2e)', () => {
 
     const projectId = createdProjectResponse.body.project.id
 
-    const createdSuiteResponse = await request(app.server)
-      .post('/suites')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        project_id: projectId,
-        title: 'Suite 1',
-        description: 'Description of suite 1',
-        pre_conditions: 'Pre-conditions of suite 1',
-      })
-
-    const suiteId = createdSuiteResponse.body.suite.id
-
     const createdTestCaseResponse = await request(app.server)
       .post('/test-cases')
       .set('Authorization', `Bearer ${token}`)
       .send({
         project_id: projectId,
-        suite_id: suiteId,
         title: 'Test Case 1',
         status: 'actual',
         description: 'Description of test case 1',
@@ -55,7 +42,7 @@ describe('Delete Test Case (e2e)', () => {
     const testCaseId = createdTestCaseResponse.body.test_case.id
 
     const responseBeforeDelete = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
 
     expect(responseBeforeDelete.body.testCases).toHaveLength(1)
@@ -65,7 +52,7 @@ describe('Delete Test Case (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
 
     const responseAfterDelete = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
 
     expect(responseAfterDelete.body.testCases).toHaveLength(0)

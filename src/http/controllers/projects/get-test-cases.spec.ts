@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Get Suite Test Cases (e2e)', () => {
+describe('Get Project Test Cases (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,7 +12,7 @@ describe('Get Suite Test Cases (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to get the test cases of a suite', async () => {
+  it('should be able to get the test cases of a project', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     const createdProjectResponse = await request(app.server)
@@ -28,24 +28,11 @@ describe('Get Suite Test Cases (e2e)', () => {
 
     const projectId = createdProjectResponse.body.project.id
 
-    const createdSuiteResponse = await request(app.server)
-      .post('/suites')
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        project_id: projectId,
-        title: 'Suite 1',
-        description: 'Description of suite 1',
-        pre_conditions: 'Pre-conditions of suite 1',
-      })
-
-    const suiteId = createdSuiteResponse.body.suite.id
-
     const createdTestCaseResponse = await request(app.server)
       .post('/test-cases')
       .set('Authorization', `Bearer ${token}`)
       .send({
         project_id: projectId,
-        suite_id: suiteId,
         title: 'Test Case 1',
         status: 'actual',
         description: 'Description of test case 1',
@@ -55,7 +42,7 @@ describe('Get Suite Test Cases (e2e)', () => {
     const testCaseId = createdTestCaseResponse.body.test_case.id
 
     const response = await request(app.server)
-      .get(`/suites/${suiteId}/test-cases`)
+      .get(`/projects/${projectId}/test-cases`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
