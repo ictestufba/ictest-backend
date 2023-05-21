@@ -62,15 +62,13 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
       return null
     }
 
-    const userId = user.id
-
     const testCase = await prisma.testCase.update({
       where: {
         id: testCaseId,
       },
       data: {
         assigned_to: {
-          set: userId,
+          set: userEmail,
         },
       },
     })
