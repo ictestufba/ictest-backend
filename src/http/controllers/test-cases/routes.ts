@@ -6,11 +6,13 @@ import { details } from './details'
 import { deleteTestCase } from './delete-test-case'
 import { update } from './update'
 import { assignToUser } from './assign-to-user'
+import { testsAssigned } from './tests-assigned-to-user'
 
 export async function testCasesRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
 
   app.get('/test-cases/:testCaseId', details)
+  app.get('/test-cases/user/:userEmail', testsAssigned)
 
   app.post('/test-cases', create)
   app.patch('/test-cases/:testCaseId/update', update)
