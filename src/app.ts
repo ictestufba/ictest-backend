@@ -6,6 +6,8 @@ import { env } from './env'
 import { usersRoutes } from './http/controllers/users/routes'
 import { projectsRoutes } from './http/controllers/projects/routes'
 import { testCasesRoutes } from './http/controllers/test-cases/routes'
+// import swaggerUi from 'swagger-ui-express'
+// import swaggerDocs from './swagger.json'
 
 export const app = fastify()
 
@@ -25,6 +27,8 @@ app.register(fastifyCookie)
 app.register(usersRoutes)
 app.register(projectsRoutes)
 app.register(testCasesRoutes)
+
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
