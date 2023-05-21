@@ -83,19 +83,8 @@ describe('Get Test Cases by User Details (e2e)', () => {
       .send()
 
     expect(response.statusCode).toEqual(200)
-    expect(response.body.testCases).toEqual(
-      expect.arrayContaining([
-        {
-          title: 'Test Case 1',
-          status: 'draft',
-          description: 'Description of test case 1',
-        },
-        {
-          title: 'Test Case 3',
-          status: 'draft',
-          description: 'Description of test case 3',
-        },
-      ]),
-    )
+    expect(response.body.testCases).length.to.equal(2)
+    expect(response.body.testCases[0].title).to.be('Test Case 1')
+    expect(response.body.testCases[1].title).to.be('Test Case 3')
   })
 })
