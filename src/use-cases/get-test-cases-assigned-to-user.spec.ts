@@ -61,12 +61,19 @@ describe('Get Test Cases Assigned To User Use Case', () => {
       assigned_to: null,
     })
 
-    await testCasesRepository.assignToUser(testCase1.id, user.email)
+    const test = await testCasesRepository.assignToUser(
+      testCase1.id,
+      user.email,
+    )
     await testCasesRepository.assignToUser(testCase2.id, user.email)
+
+    console.log(test)
 
     const { testCases } = await sut.execute({
       userEmail: user.email,
     })
+
+    console.log(testCases)
 
     expect(testCases).toHaveLength(2)
     expect(testCases).toEqual([
