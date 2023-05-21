@@ -84,9 +84,7 @@ describe('Get Test Cases by User Details (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    expect(responseToAssign.body.testCase.assigned_to).toEqual(
-      expect.any(String),
-    )
+    expect(responseToAssign.body.testCase.assigned_to).toEqual(userEmail)
 
     const response = await request(app.server)
       .get(`/test-cases/user/${userEmail}`)
