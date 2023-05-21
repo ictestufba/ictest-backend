@@ -65,15 +65,31 @@ describe('Get Test Cases by User Details (e2e)', () => {
 
     const testCaseId3 = createTestCaseResponse3.body.test_case.id
 
-    await request(app.server)
+    const testCase1Response = await request(app.server)
       .patch(`/test-cases/${testCaseId1}/assign`)
       .set('Authorization', `Bearer ${token}`)
       .send()
+
+    expect(testCase1Response.body.testCase).toEqual(
+      expect.objectContaining({
+        title: 'Test Case 1',
+        status: 'draft',
+        description: 'Description of test case 1',
+      }),
+    )
 
     await request(app.server)
       .patch(`/test-cases/${testCaseId3}/assign`)
       .set('Authorization', `Bearer ${token}`)
       .send()
+
+    expect(testCase1Response.body.testCase).toEqual(
+      expect.objectContaining({
+        title: 'Test Case 3',
+        status: 'draft',
+        description: 'Description of test case 3',
+      }),
+    )
 
     const userEmail = 'johndoe@example.com'
 
