@@ -34,7 +34,7 @@ describe('Get Project Test Cases (e2e)', () => {
       .send({
         project_id: projectId,
         title: 'Test Case 1',
-        status: 'aberto',
+        status: 'open',
         description: 'Description of test case 1',
         is_flaky: false,
       })

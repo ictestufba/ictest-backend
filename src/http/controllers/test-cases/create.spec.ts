@@ -34,7 +34,7 @@ describe('Create Test Case (e2e)', () => {
       .send({
         project_id: projectId,
         title: 'Test Case a1',
-        status: 'aberto',
+        status: 'open',
         description: 'Description of test case 1',
         is_flaky: false,
       })

@@ -65,11 +65,10 @@ model UsersOnProjectsWithRoles {
 }
 
 enum Status {
-  not_set
-  aberto
-  em_progresso
-  falha
-  sucesso
+  open
+  in_progress
+  error
+  success
 }
 
 enum Severity {
@@ -126,7 +125,7 @@ enum AutomationStatus {
 model TestCase {
   id                String           @id @default(uuid())
   title             String
-  status            Status           @default(aberto)
+  status            Status           @default(open)
   description       String?
   Project           Project?         @relation(fields: [project_id], references: [id])
   project_id        String?

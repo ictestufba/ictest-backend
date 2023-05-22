@@ -34,7 +34,7 @@ describe('Test Case Details (e2e)', () => {
       .send({
         project_id: projectId,
         title: 'Test Case 1',
-        status: 'aberto',
+        status: 'open',
         description: 'Description of test case 1',
         is_flaky: false,
       })
@@ -50,7 +50,7 @@ describe('Test Case Details (e2e)', () => {
     expect(response.body.testCase).toEqual(
       expect.objectContaining({
         title: 'Test Case 1',
-        status: 'aberto',
+        status: 'open',
         description: 'Description of test case 1',
       }),
     )

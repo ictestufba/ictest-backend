@@ -10,9 +10,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
   const updateTestCaseBodySchema = z.object({
     data: z.object({
       title: z.string().optional(),
-      status: z
-        .enum(['not_set', 'aberto', 'em_progresso', 'falha', 'sucesso'])
-        .optional(),
+      status: z.enum(['open', 'in_progress', 'error', 'success']).optional(),
       description: z.string().nullable().optional(),
       severity: z
         .enum([
