@@ -65,9 +65,11 @@ model UsersOnProjectsWithRoles {
 }
 
 enum Status {
-  actual
-  draft
-  deprecated
+  not_set
+  aberto
+  em_progresso
+  falha
+  sucesso
 }
 
 enum Severity {
@@ -124,7 +126,7 @@ enum AutomationStatus {
 model TestCase {
   id                String           @id @default(uuid())
   title             String
-  status            Status           @default(actual)
+  status            Status           @default(aberto)
   description       String?
   Project           Project?         @relation(fields: [project_id], references: [id])
   project_id        String?

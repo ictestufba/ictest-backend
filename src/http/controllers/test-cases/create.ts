@@ -6,7 +6,9 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createTestCaseBodySchema = z.object({
     project_id: z.string().uuid(),
     title: z.string(),
-    status: z.enum(['actual', 'draft', 'deprecated']).default('actual'),
+    status: z
+      .enum(['not_set', 'aberto', 'em_progresso', 'falha', 'sucesso'])
+      .default('aberto'),
     description: z.string().nullable(),
     severity: z
       .enum([
