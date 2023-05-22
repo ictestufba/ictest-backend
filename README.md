@@ -3,7 +3,9 @@
 ## Configuração para rodar o projeto na sua máquina
 - Inicialmente, você precisa ter o Docker instalado na sua máquina.
 
-- Clone o repositório e na raiz crie um arquivo `.env` para declarar as variáveis de ambiente `NODE_ENV`, `JWT_SECRET` e `DATABASE_URL` (veja o exemplo no arquivo `.env.example`).
+- Clone o repositório
+
+- Na raiz do projeto, crie um arquivo `.env` para declarar as variáveis de ambiente `NODE_ENV`, `JWT_SECRET` e `DATABASE_URL` (veja o exemplo no arquivo `.env.example`). Dica do formato da URL do PostgreSQL: `postgresql://usuario:senha@ip:porta/banco-de-dados?schema=nome-do-schema`. Para o caso do ambiente de desenvolvimento, conforme o docker-compose: `postgresql://docker:docker@localhost:5432/ictest?schema=public`
 
 - Para subir o banco de dados, rode o seguinte comando:
 
@@ -15,6 +17,12 @@ docker compose up -d
 
 ```bash
 npm i
+```
+
+- Rode as migrations do banco de dados com o seguinte comando:
+
+```bash
+npx prisma migrate dev
 ```
 
 - Com as dependências instaladas, você poderá rodar o projeto utilizando o seguinte comando:
