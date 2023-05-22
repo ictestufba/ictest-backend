@@ -6,10 +6,36 @@ import { env } from './env'
 import { usersRoutes } from './http/controllers/users/routes'
 import { projectsRoutes } from './http/controllers/projects/routes'
 import { testCasesRoutes } from './http/controllers/test-cases/routes'
-// import swaggerUi from 'swagger-ui-express'
-// import swaggerDocs from './swagger.json'
+import swagger from '@fastify/swagger'
+import swaggerUI from '@fastify/swagger-ui'
+import swaggerDocs from './swagger.json'
 
 export const app = fastify()
+
+app.register(swagger, {
+  swagger: JSON.parse(JSON.stringify(swaggerDocs)),
+})
+app.register(swaggerUI, {
+  routePrefix: '/docs',
+  uiConfig: {
+    docExpansion: 'full',
+    deepLinking: false,
+  },
+  uiHooks: {
+    onRequest: function (request, reply, next) {
+      next()
+    },
+    preHandler: function (request, reply, next) {
+      next()
+    },
+  },
+  staticCSP: true,
+  transformStaticCSP: (header) => header,
+  transformSpecification: (swaggerObject, request, reply) => {
+    return swaggerObject
+  },
+  transformSpecificationClone: true,
+})
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
