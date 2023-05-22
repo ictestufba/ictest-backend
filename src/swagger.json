@@ -1,0 +1,595 @@
+{
+    "swagger": "3.0",
+    "info": {
+      "title": "ictest-backend",
+      "version": "1.0.0",
+      "description": "An api to manage test cases in your projects"
+    },
+    "basePath": "https://ictest-backend.fly.dev",
+    "paths": {
+      "/users": {
+        "post": {
+          "description": "Creates a new user",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User created successfully"
+            },
+            "409": {
+              "description": "User already exists"
+            }
+          }
+        }        
+      },
+      "/me": {
+        "get": {
+            "description": "Get profile",
+            "parameters": { 
+                "name": "userId",
+                "in": "params", 
+                "required": true 
+            },
+            "responses": {
+              "200": {
+                "description": "Successful response",
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/definitions/UserProfile"
+                  }
+                }
+              }
+            }
+        }
+      },
+      "/sessions": {
+        "post": {
+            "description": "Authenticates a user",
+            "parameters": [
+              {
+                "name": "user",
+                "in": "body",
+                "description": "User email and pass",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/UserEmailAndPass"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "User authenticated",
+                "schema": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+              },
+              "400": {
+                  "description": "Invalid credentials"
+              }
+            }
+        }
+      },
+      "/token/refresh": {
+        "patch": {
+            "description": "Refresh token",
+            "parameters": [
+              {
+                "name": "token",
+                "required": true,
+                "schema": {
+                    "token": {
+                      "type": "string"
+                    }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Token refresh",
+                "schema": {
+                    "token": {
+                        "type": "string"
+                      }
+                }
+              }
+            }
+        }
+      },
+      "/projects": {
+        "post": {
+            "description": "Creates a new project",
+            "parameters": [
+              {
+                "name": "project",
+                "in": "body",
+                "description": "Project object",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Project created successfully",
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }
+            }
+        },
+        "get": {
+            "description": "List projects",
+            "responses": {
+              "200": {
+                "description": "List of projects",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                      "$ref": "#/definitions/Project"
+                  }
+                }
+              }
+            }
+        } 
+      },
+      "/projects/:projectId": {
+        "get": {
+            "description": "Get project details",
+            "parameters": {
+                "name": "projectId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                    "projectId": {
+                      "type": "string"
+                    }
+                }
+            },
+            "responses": {
+              "200": {
+                "description": "Project details",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                      "$ref": "#/definitions/Project"
+                  }
+                }
+              },
+              "404": {
+                "description": "Resource not found"
+              }
+            }
+        },
+        "delete": {
+            "description": "Delete a project",
+            "parameters": {
+                "name": "projectId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                    "projectId": {
+                      "type": "string"
+                    }
+                }
+            },
+            "responses": {
+              "200": {
+                "description": "Project deleted successfully"                
+              },
+              "404": {
+                "description": "Resource not found"
+              }
+            }
+        } 
+      },
+      "/projects/:projectId/test-cases": {
+        "get": {
+            "description": "Get project details",
+            "parameters": {
+                "name": "projectId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                    "projectId": {
+                      "type": "string"
+                    }
+                }
+            },
+            "responses": {
+              "200": {
+                "description": "List test-cases related to that project",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                      "$ref": "#/definitions/TestCase"
+                  }
+                }
+              },
+              "404": {
+                "description": "Resource not found"
+              }
+            }
+        }
+      },
+      "/projects/:projectId/update": {
+        "patch": {
+            "description": "Update project details",
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                    "projectId": {
+                      "type": "string"
+                    }
+                }
+              },
+              {
+                "name": "project",
+                "in": "body",
+                "description": "Project object",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }                
+            ],
+            "responses": {
+              "200": {
+                "description": "Project updated",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                      "$ref": "#/definitions/Project"
+                  }
+                }
+              },
+              "404": {
+                "description": "Resource not found"
+              }
+            }
+         }
+      },
+      "/projects/:projectId/addMember": {
+        "patch": {
+            "description": "Add a member to a project",
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                    "projectId": {
+                      "type": "string"
+                    }
+                }
+              },
+              {
+                "name": "userEmail",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "userEmail": {
+                      "type": "string"
+                    }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Member added to project",
+                "schema": {
+                  "userEmail": {
+                    "type": "string"
+                  }
+                }
+              },
+              "404": {
+                "description": "Resource not found"
+              }
+            }
+        }
+      },
+      "/test-cases": {
+        "post": {
+            "description": "Create new test-case",
+            "parameters": [
+              {
+                "name": "test-case",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/TestCase"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Test-case created successfully",
+                "schema": {
+                    "$ref": "#/definitions/TestCase"
+                }
+              },
+              "404": {
+                  "description": "Resource not found"
+              }
+            }
+        }
+      },
+      "/test-cases/:testCaseId": {
+        "get": {
+            "description": "Get test-case details",
+            "parameters": [
+              {
+                "name": "testCaseId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                  "testCaseId": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Test-case details",
+                "schema": {
+                    "$ref": "#/definitions/TestCase"
+                }
+              },
+              "404": {
+                  "description": "Resource not found"
+              }
+            }
+        },
+        "delete": {
+            "description": "Delete test-case",
+            "parameters": [
+              {
+                "name": "testCaseId",
+                "in": "params",
+                "required": true,
+                "schema": {
+                  "testCaseId": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Test-case deleted",
+                "schema": {
+                    "$ref": "#/definitions/TestCase"
+                }
+              },
+              "404": {
+                  "description": "Resource not found"
+              }
+            }
+        }
+      },
+      "/test-cases/:testCaseId/update": {
+        "patch": {
+            "description": "Update test-case details",
+            "parameters": [
+                {
+                    "name": "testCaseId",
+                    "in": "params",
+                    "required": true,
+                    "schema": {
+                        "testCaseId": {
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                  "name": "test-case",
+                  "in": "body",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/TestCase"
+                  }
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "Test-case details",
+                "schema": {
+                    "$ref": "#/definitions/TestCase"
+                }
+              },
+              "404": {
+                  "description": "Resource not found"
+              }
+            }
+        }
+      },
+      "/test-cases/:testCaseId/assign": {
+        "patch": {
+            "description": "Assign test-case to user",
+            "parameters": [
+                {
+                    "name": "testCaseId",
+                    "in": "params",
+                    "required": true,
+                    "schema": {
+                        "testCaseId": {
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                    "name": "userEmail",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "userEmail": {
+                            "type": "string"
+                        }
+                    }
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "Test-case assigned to user",
+                "schema": {
+                    "$ref": "#/definitions/TestCase"
+                }
+              },
+              "404": {
+                  "description": "Resource not found"
+              }
+            }
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "UserEmailAndPass": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "visibility": {
+            "type": "enum",
+            "values": ["public", "private"]
+          },
+          "member_access": {
+            "type": "enum",
+            "values": ["add_all", "add_specific", "dont_add"]
+          }
+        }
+      },
+      "TestCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "enum",
+            "values": ["actual", "draft", "deprecated"]
+          },
+          "description": {
+            "type": "string" 
+          },
+          "project_id": {
+            "type": "string" 
+          },
+          "severity": {
+            "type": "enum",
+            "values": ["not_set", "blocker", "critical", "major", "normal", "minor", "trivial"]
+          },
+          "priority": {
+            "type": "enum",
+            "values": ["not_set", "high", "medium", "low"]
+          },
+          "type": {
+            "type": "enum",
+            "values": ["other", "functional", "smoke", "regression", "security", "usability", "performance", "acceptance", "compatibility", "integration", "exploratory"]
+          },
+          "layer": {
+            "type": "enum",
+            "values": ["not_set", "e2e", "api", "unit"]
+          },
+          "is_flaky": {
+            "type": "boolean" 
+          },
+          "behavior": {
+            "type": "enum",
+            "values": ["not_set", "positive", "negative", "destructive"]
+          },
+          "automation_status": {
+            "type": "enum",
+            "values": ["not_automated", "to_be_automated", "automated"]
+          },
+          "pre_conditions": {
+            "type": "string" 
+          },
+          "post_conditions": {
+            "type": "string" 
+          },
+          "assigned_to": {
+            "type": "string" 
+          },
+          "created_at": {
+            "type": "Date" 
+          },
+          "updated_at": {
+            "type": "Date" 
+          }
+        }
+      }
+    }
+  }
+  
