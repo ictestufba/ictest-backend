@@ -11,7 +11,7 @@ import { testCasesRoutes } from './http/controllers/test-cases/routes'
 export const app = fastify()
 
 app.register(cors, {
-  origin: 'http://localhost:3000',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 })
