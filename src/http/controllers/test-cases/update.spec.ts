@@ -47,7 +47,7 @@ describe('Update Test Case (e2e)', () => {
       .send({
         data: {
           title: 'Test Case 1 Updated',
-          // status: 'sucesso',
+          status: 'sucesso',
           description: 'Description of test case 1 updated',
           is_flaky: true,
         },
@@ -58,7 +58,7 @@ describe('Update Test Case (e2e)', () => {
       expect.objectContaining({
         id: testCaseId,
         title: 'Test Case 1 Updated',
-        // status: 'sucesso',
+        status: 'sucesso',
         description: 'Description of test case 1 updated',
         is_flaky: true,
       }),
