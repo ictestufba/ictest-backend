@@ -20,14 +20,12 @@ describe('Delete Test Case Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const testCase1 = await testCasesRepository.create({
       project_id: project.id,
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -44,7 +42,7 @@ describe('Delete Test Case Use Case', () => {
     await testCasesRepository.create({
       project_id: project.id,
       title: 'Test Case 2',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,

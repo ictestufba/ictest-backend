@@ -21,27 +21,14 @@ model User {
   @@map("users")
 }
 
-enum Visibility {
-  private
-  public
-}
-
-enum MemberAccess {
-  add_all
-  add_specific
-  dont_add
-}
-
 model Project {
-  id            String       @id @default(uuid())
-  name          String
-  code          String
-  description   String?
-  visibility    Visibility   @default(private)
-  member_access MemberAccess
-  test_cases    TestCase[]
-  created_at    DateTime     @default(now())
-  updated_at    DateTime     @updatedAt
+  id          String     @id @default(uuid())
+  name        String
+  code        String
+  description String?
+  test_cases  TestCase[]
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
 
   members UsersOnProjectsWithRoles[]
 

@@ -5,8 +5,6 @@ interface CreateProjectUseCaseRequest {
   name: string
   code: string
   description: string | null
-  visibility: 'private' | 'public'
-  member_access: 'add_all' | 'add_specific' | 'dont_add'
 }
 
 interface CreateProjectUseCaseResponse {
@@ -20,15 +18,11 @@ export class CreateProjectUseCase {
     name,
     code,
     description,
-    visibility,
-    member_access,
   }: CreateProjectUseCaseRequest): Promise<CreateProjectUseCaseResponse> {
     const project = await this.projectsRepository.create({
       name,
       code,
       description,
-      visibility,
-      member_access,
     })
 
     return {

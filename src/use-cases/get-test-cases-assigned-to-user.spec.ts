@@ -27,9 +27,8 @@ describe('Get Test Cases Assigned To User Use Case', () => {
 
     const testCase1 = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -45,9 +44,8 @@ describe('Get Test Cases Assigned To User Use Case', () => {
 
     const testCase2 = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 2',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,

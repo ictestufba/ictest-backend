@@ -23,15 +23,12 @@ describe('Get Test Cases From Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await testCasesRepository.create({
       project_id: project.id,
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -47,9 +44,8 @@ describe('Get Test Cases From Project Use Case', () => {
 
     await testCasesRepository.create({
       project_id: project.id,
-      suite_id: 'mock-suite-id',
       title: 'Test Case 2',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,

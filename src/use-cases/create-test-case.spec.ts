@@ -20,14 +20,12 @@ describe('Create Test Case Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const { test_case } = await sut.execute({
       project_id: project.id,
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -41,7 +39,7 @@ describe('Create Test Case Use Case', () => {
     })
 
     expect(test_case.id).toEqual(expect.any(String))
-    expect(test_case.status).toEqual('actual')
+    expect(test_case.status).toEqual('open')
   })
 
   it('should not be able to create a test case with a non-existing project', async () => {
@@ -49,7 +47,7 @@ describe('Create Test Case Use Case', () => {
       sut.execute({
         project_id: 'non-existing-project-id',
         title: 'Test Case 1',
-        status: 'actual',
+        status: 'open',
         description: null,
         pre_conditions: null,
         post_conditions: null,

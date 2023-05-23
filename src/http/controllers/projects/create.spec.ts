@@ -22,8 +22,6 @@ describe('Create Project (e2e)', () => {
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     expect(response.statusCode).toEqual(201)

@@ -19,9 +19,8 @@ describe('Assign Test Case To User Use Case', () => {
   it('should be able to assign a test case to a user', async () => {
     const testCase = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -52,9 +51,8 @@ describe('Assign Test Case To User Use Case', () => {
   it('should not be able to assign non-existing test case to a user', async () => {
     await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -85,9 +83,8 @@ describe('Assign Test Case To User Use Case', () => {
   it('should not be able to assign a test case to a non-existing-user', async () => {
     const testCase = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,

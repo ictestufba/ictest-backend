@@ -15,9 +15,8 @@ describe('Update Test Case Use Case', () => {
   it('should be able to update a test case', async () => {
     const newTestCase = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,
@@ -46,9 +45,8 @@ describe('Update Test Case Use Case', () => {
   it('should not be able to update a non-existing test case', async () => {
     await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
       pre_conditions: null,
       post_conditions: null,

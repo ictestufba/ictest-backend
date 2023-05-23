@@ -7,12 +7,11 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     name: z.string(),
     code: z.string().max(10),
     description: z.string().nullable(),
-    visibility: z.enum(['public', 'private']).default('private'),
-    member_access: z.enum(['add_all', 'add_specific', 'dont_add']),
   })
 
-  const { name, code, description, visibility, member_access } =
-    createProjectBodySchema.parse(request.body)
+  const { name, code, description } = createProjectBodySchema.parse(
+    request.body,
+  )
 
   const createProjectUseCase = makeCreateProjectUseCase()
 
@@ -20,8 +19,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     name,
     code,
     description,
-    visibility,
-    member_access,
   })
 
   return reply.status(201).send(project)

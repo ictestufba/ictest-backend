@@ -19,10 +19,9 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
     const testCase = {
       id: data.id ?? randomUUID(),
       title: data.title,
-      status: data.status ?? 'actual',
+      status: data.status ?? 'open',
       description: data.description ?? null,
       project_id: data.project_id ?? null,
-      suite_id: data.suite_id ?? null,
       severity: data.severity ?? 'not_set',
       priority: data.priority ?? 'not_set',
       type: data.type ?? 'other',

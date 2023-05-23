@@ -17,24 +17,18 @@ describe('Delete Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const project = await projectsRepository.create({
       name: 'Project 2',
       code: 'PROJ2',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await projectsRepository.create({
       name: 'Project 3',
       code: 'PROJ3',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await sut.execute({
@@ -55,8 +49,6 @@ describe('Delete Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await expect(() =>

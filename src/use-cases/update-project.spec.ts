@@ -17,8 +17,6 @@ describe('Update Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const { project } = await sut.execute({
@@ -36,8 +34,6 @@ describe('Update Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await expect(() =>
