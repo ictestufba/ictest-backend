@@ -22,8 +22,6 @@ describe('Update Test Case (e2e)', () => {
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description of project 1',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     const projectId = createdProjectResponse.body.project.id
@@ -36,7 +34,6 @@ describe('Update Test Case (e2e)', () => {
         title: 'Test Case 1',
         status: 'open',
         description: 'Description of test case 1',
-        is_flaky: false,
       })
 
     const testCaseId = testCaseResponse.body.test_case.id
@@ -49,7 +46,6 @@ describe('Update Test Case (e2e)', () => {
           title: 'Test Case 1 Updated',
           status: 'success',
           description: 'Description of test case 1 updated',
-          is_flaky: true,
         },
       })
 
@@ -60,7 +56,6 @@ describe('Update Test Case (e2e)', () => {
         title: 'Test Case 1 Updated',
         status: 'success',
         description: 'Description of test case 1 updated',
-        is_flaky: true,
       }),
     )
   })

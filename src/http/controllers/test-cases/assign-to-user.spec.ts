@@ -28,8 +28,6 @@ describe('Assign Test Case To User (e2e)', () => {
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     const projectId = createProjectResponse.body.project.id
@@ -42,7 +40,6 @@ describe('Assign Test Case To User (e2e)', () => {
         title: 'Test Case 1',
         status: 'open',
         description: 'Description of test case 1',
-        is_flaky: false,
       })
 
     const testCaseId = createTestCaseResponse.body.test_case.id

@@ -12,17 +12,6 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       title: z.string().optional(),
       status: z.enum(['open', 'in_progress', 'error', 'success']).optional(),
       description: z.string().nullable().optional(),
-      severity: z
-        .enum([
-          'not_set',
-          'blocker',
-          'critical',
-          'major',
-          'normal',
-          'minor',
-          'trivial',
-        ])
-        .optional(),
       priority: z.enum(['not_set', 'high', 'medium', 'low']).optional(),
       type: z
         .enum([
@@ -40,15 +29,12 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
         ])
         .optional(),
       layer: z.enum(['not_set', 'e2e', 'api', 'unit']).optional(),
-      is_flaky: z.boolean().optional(),
       behavior: z
         .enum(['not_set', 'positive', 'negative', 'destructive'])
         .optional(),
       automation_status: z
         .enum(['not_automated', 'to_be_automated', 'automated'])
         .optional(),
-      pre_conditions: z.string().nullable().optional(),
-      post_conditions: z.string().nullable().optional(),
     }),
   })
 
