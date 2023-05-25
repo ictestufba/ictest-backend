@@ -16,16 +16,12 @@ describe('Create Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await projectsRepository.create({
       name: 'Project 2',
       code: 'PROJ2',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const { projects } = await sut.execute()

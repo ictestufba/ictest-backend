@@ -22,8 +22,6 @@ describe('Test Case Details (e2e)', () => {
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     const projectId = projectResponse.body.project.id
@@ -34,9 +32,8 @@ describe('Test Case Details (e2e)', () => {
       .send({
         project_id: projectId,
         title: 'Test Case 1',
-        status: 'draft',
+        status: 'open',
         description: 'Description of test case 1',
-        is_flaky: false,
       })
 
     const testCaseId = testCaseResponse.body.test_case.id
@@ -50,7 +47,7 @@ describe('Test Case Details (e2e)', () => {
     expect(response.body.testCase).toEqual(
       expect.objectContaining({
         title: 'Test Case 1',
-        status: 'draft',
+        status: 'open',
         description: 'Description of test case 1',
       }),
     )

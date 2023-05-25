@@ -4,7 +4,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface UpdateTestCaseUseCaseRequest {
   testCaseId: string
-  data: Prisma.SuiteUpdateInput
+  data: Prisma.TestCaseUpdateInput
 }
 
 interface UpdateTestCaseUseCaseResponse {

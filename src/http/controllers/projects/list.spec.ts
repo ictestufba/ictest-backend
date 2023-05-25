@@ -22,8 +22,6 @@ describe('List Projects (e2e)', () => {
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description of project 1',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     await request(app.server)
@@ -33,8 +31,6 @@ describe('List Projects (e2e)', () => {
         name: 'Project 2',
         code: 'PROJ2',
         description: 'Some description of project 2',
-        visibility: 'private',
-        member_access: 'add_all',
       })
 
     const response = await request(app.server)

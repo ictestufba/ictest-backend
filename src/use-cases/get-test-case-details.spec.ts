@@ -15,17 +15,12 @@ describe('Get Test Case Details Use Case', () => {
   it('should be able to get test case details', async () => {
     const createdTestCase = await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
-      pre_conditions: null,
-      post_conditions: null,
-      severity: 'not_set',
       priority: 'not_set',
       automation_status: 'not_automated',
       behavior: 'not_set',
-      is_flaky: false,
       layer: 'not_set',
       type: 'other',
       assigned_to: null,
@@ -36,23 +31,18 @@ describe('Get Test Case Details Use Case', () => {
     })
 
     expect(testCase.title).toEqual('Test Case 1')
-    expect(testCase.status).toEqual('actual')
+    expect(testCase.status).toEqual('open')
   })
 
   it('should not be able to get details from a non-existing test case', async () => {
     await testCasesRepository.create({
       project_id: 'mock-project-id',
-      suite_id: 'mock-suite-id',
       title: 'Test Case 1',
-      status: 'actual',
+      status: 'open',
       description: null,
-      pre_conditions: null,
-      post_conditions: null,
-      severity: 'not_set',
       priority: 'not_set',
       automation_status: 'not_automated',
       behavior: 'not_set',
-      is_flaky: false,
       layer: 'not_set',
       type: 'other',
       assigned_to: null,

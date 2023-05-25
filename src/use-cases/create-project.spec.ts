@@ -16,8 +16,6 @@ describe('Create Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     expect(project.id).toEqual(expect.any(String))

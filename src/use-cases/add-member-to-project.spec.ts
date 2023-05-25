@@ -21,8 +21,6 @@ describe('Update Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const user1 = await usersRepository.create({
@@ -55,8 +53,6 @@ describe('Update Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     const user = await usersRepository.create({
@@ -78,8 +74,6 @@ describe('Update Project Use Case', () => {
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
-      visibility: 'private',
-      member_access: 'add_all',
     })
 
     await usersRepository.create({
