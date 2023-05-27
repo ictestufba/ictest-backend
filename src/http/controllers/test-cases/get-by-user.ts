@@ -9,9 +9,9 @@ export async function getByUser(request: FastifyRequest, reply: FastifyReply) {
 
   const { userEmail } = getTestCasesByUserParamsSchema.parse(request.params)
 
-  const assignTestCaseToUserUseCase = makeGetTestCasesByUserUseCase()
+  const getTestCasesByUserUseCase = makeGetTestCasesByUserUseCase()
 
-  const testCases = await assignTestCaseToUserUseCase.execute({
+  const testCases = await getTestCasesByUserUseCase.execute({
     userEmail,
   })
 

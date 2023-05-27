@@ -35,7 +35,9 @@ export class AssignTestCaseToUserUseCase {
       throw new UserDoesNotExistError()
     }
 
-    await this.testCasesRepository.assignToUser(testCaseId, userEmail)
+    const userId = user.id
+
+    await this.testCasesRepository.assignToUser(testCaseId, userId)
 
     return {
       testCase,

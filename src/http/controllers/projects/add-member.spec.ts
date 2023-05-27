@@ -28,7 +28,7 @@ describe('Add Member To Project (e2e)', () => {
 
     await request(app.server).post('/users').send({
       name: 'Jane Doe',
-      email: 'janedoe@example.com',
+      email: 'janeDoe@example.com',
       password: '123456',
     })
 
@@ -36,7 +36,7 @@ describe('Add Member To Project (e2e)', () => {
       .patch(`/projects/${projectId}/add-member`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        userEmail: 'janedoe@example.com',
+        userEmail: 'janeDoe@example.com',
       })
 
     expect(response.statusCode).toEqual(200)
