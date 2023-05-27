@@ -1,21 +1,18 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { InMemoryTestCasesRepository } from '@/repositories/in-memory/in-memory-test-cases-repository'
 import { UserDoesNotExistError } from './errors/user-does-not-exist-error'
-import { GetTestCasesAssignedToUserUseCase } from './get-test-cases-assigned-to-user'
+import { GetTestCasesByUserUseCase } from './get-test-cases-by-user'
 import { expect, describe, it, beforeEach } from 'vitest'
 
-let usersRepository: InMemoryUsersRepository
 let testCasesRepository: InMemoryTestCasesRepository
-let sut: GetTestCasesAssignedToUserUseCase
+let usersRepository: InMemoryUsersRepository
+let sut: GetTestCasesByUserUseCase
 
-describe('Get Test Cases Assigned To User Use Case', () => {
+describe('Get Test Cases By User Use Case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     testCasesRepository = new InMemoryTestCasesRepository()
-    sut = new GetTestCasesAssignedToUserUseCase(
-      usersRepository,
-      testCasesRepository,
-    )
+    sut = new GetTestCasesByUserUseCase(testCasesRepository, usersRepository)
   })
 
   it('should be able to get the test cases assigned to a specific user', async () => {
@@ -38,7 +35,7 @@ describe('Get Test Cases Assigned To User Use Case', () => {
       assigned_to: null,
     })
 
-    const testCase2 = await testCasesRepository.create({
+    await testCasesRepository.create({
       project_id: 'mock-project-id',
       title: 'Test Case 2',
       status: 'open',
@@ -51,8 +48,21 @@ describe('Get Test Cases Assigned To User Use Case', () => {
       assigned_to: null,
     })
 
+    const testCase3 = await testCasesRepository.create({
+      project_id: 'mock-project-id',
+      title: 'Test Case 3',
+      status: 'open',
+      description: null,
+      priority: 'not_set',
+      automation_status: 'not_automated',
+      behavior: 'not_set',
+      layer: 'not_set',
+      type: 'other',
+      assigned_to: null,
+    })
+
     await testCasesRepository.assignToUser(testCase1.id, user.email)
-    await testCasesRepository.assignToUser(testCase2.id, user.email)
+    await testCasesRepository.assignToUser(testCase3.id, user.email)
 
     const { testCases } = await sut.execute({
       userEmail: user.email,
@@ -61,7 +71,7 @@ describe('Get Test Cases Assigned To User Use Case', () => {
     expect(testCases).toHaveLength(2)
     expect(testCases).toEqual([
       expect.objectContaining({ title: 'Test Case 1' }),
-      expect.objectContaining({ title: 'Test Case 2' }),
+      expect.objectContaining({ title: 'Test Case 3' }),
     ])
   })
 
