@@ -3,11 +3,11 @@ import { z } from 'zod'
 import { makeGetTestCasesByUserUseCase } from '@/use-cases/factories/make-get-test-cases-by-user-use-case'
 
 export async function getByUser(request: FastifyRequest, reply: FastifyReply) {
-  const getTestCasesByUserBodySchema = z.object({
+  const getTestCasesByUserParamsSchema = z.object({
     userEmail: z.string().email(),
   })
 
-  const { userEmail } = getTestCasesByUserBodySchema.parse(request.body)
+  const { userEmail } = getTestCasesByUserParamsSchema.parse(request.params)
 
   const assignTestCaseToUserUseCase = makeGetTestCasesByUserUseCase()
 
