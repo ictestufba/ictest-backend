@@ -23,8 +23,6 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
       name: data.name,
       code: data.code,
       description: data.description ?? null,
-      visibility: data.visibility ?? 'private',
-      member_access: data.member_access ?? 'add_all',
       members: [],
       created_at: new Date(),
       updated_at: new Date(),
@@ -57,15 +55,15 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     return this.items[index]
   }
 
-  async addMember(projectId: string, userEmail: string) {
+  async addMember(projectId: string, userId: string) {
     const index = this.items.findIndex((project) => project.id === projectId)
 
     if (index === -1) {
       return null
     }
 
-    this.items[index].members.push(userEmail)
+    this.items[index].members.push(userId)
 
-    return userEmail
+    return userId
   }
 }

@@ -9,5 +9,5 @@ export interface ProjectsRepository {
     projectId: string,
     data: Prisma.ProjectUpdateInput,
   ): Promise<Project | null>
-  addMember(projectId: string, userEmail: string): Promise<string | null>
+  addMember(projectId: string, userId: string): Promise<string | null>
 }

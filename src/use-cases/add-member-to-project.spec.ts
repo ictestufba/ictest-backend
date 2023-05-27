@@ -24,12 +24,14 @@ describe('Update Project Use Case', () => {
     })
 
     const user1 = await usersRepository.create({
+      id: 'mock-user-id1',
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: 'hashed-password',
     })
 
     const user2 = await usersRepository.create({
+      id: 'mock-user-id2',
       name: 'Fulano',
       email: 'fulano@example.com',
       password_hash: 'hashed-password',
@@ -45,7 +47,7 @@ describe('Update Project Use Case', () => {
       userEmail: user2.email,
     })
 
-    expect(project.members).toEqual([user1.email, user2.email])
+    expect(project.members).toEqual([user1.id, user2.id])
   })
 
   it('should not be able to add a member to a non-existing project', async () => {

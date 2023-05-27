@@ -61,8 +61,8 @@ describe('Get Test Cases By User Use Case', () => {
       assigned_to: null,
     })
 
-    await testCasesRepository.assignToUser(testCase1.id, user.email)
-    await testCasesRepository.assignToUser(testCase3.id, user.email)
+    await testCasesRepository.assignToUser(testCase1.id, user.id)
+    await testCasesRepository.assignToUser(testCase3.id, user.id)
 
     const { testCases } = await sut.execute({
       userEmail: user.email,

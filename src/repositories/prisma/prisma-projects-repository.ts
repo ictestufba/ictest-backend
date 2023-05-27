@@ -50,18 +50,16 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return project
   }
 
-  async addMember(projectId: string, userEmail: string) {
+  async addMember(projectId: string, userId: string) {
     const user = await prisma.user.findUnique({
       where: {
-        email: userEmail,
+        email: userId,
       },
     })
 
     if (!user) {
       return null
     }
-
-    const userId = user?.id
 
     await prisma.project.update({
       where: {
@@ -77,6 +75,6 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
     })
 
-    return userEmail
+    return user.email
   }
 }
