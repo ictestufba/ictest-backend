@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Assign Test Case To User (e2e)', () => {
+describe('Get Test Cases By User (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,7 +12,7 @@ describe('Assign Test Case To User (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to assign a test case to specific user', async () => {
+  it('should be able to get test cases by specific user', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server).post('/users').send({
