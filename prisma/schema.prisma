@@ -29,6 +29,7 @@ model Project {
   test_cases  TestCase[]
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
+  is_deleted  Boolean?   @default(false)
 
   members UsersOnProjectsWithRoles[]
 
