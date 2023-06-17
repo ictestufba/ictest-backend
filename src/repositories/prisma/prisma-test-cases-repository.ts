@@ -19,13 +19,18 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
       },
     })
 
+    if (!testCase || testCase.is_deleted) return null
+
     return testCase
   }
 
   async delete(testCaseId: string) {
-    await prisma.testCase.delete({
+    await prisma.testCase.update({
       where: {
         id: testCaseId,
+      },
+      data: {
+        is_deleted: true,
       },
     })
   }
@@ -34,6 +39,7 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     const testCases = await prisma.testCase.findMany({
       where: {
         project_id: projectId,
+        is_deleted: false,
       },
     })
 
@@ -47,6 +53,8 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
       },
       data,
     })
+
+    if (!testCase || testCase.is_deleted) return null
 
     return testCase
   }
@@ -70,6 +78,7 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     const testCases = await prisma.testCase.findMany({
       where: {
         assigned_to: userId,
+        is_deleted: false,
       },
     })
 

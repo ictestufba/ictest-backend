@@ -46,8 +46,6 @@ describe('Get Project Members (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    console.log('response :>> ', response.body)
-
     expect(response.statusCode).toEqual(200)
     expect(response.body.users).toHaveLength(1)
     expect(response.body.users).toEqual([
