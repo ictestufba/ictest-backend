@@ -35,6 +35,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       automation_status: z
         .enum(['not_automated', 'to_be_automated', 'automated'])
         .optional(),
+      deadline: z.string().nullable().default(null),
     }),
   })
 

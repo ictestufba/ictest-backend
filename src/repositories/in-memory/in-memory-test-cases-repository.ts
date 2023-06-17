@@ -27,6 +27,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
       layer: data.layer ?? 'not_set',
       behavior: data.behavior ?? 'not_set',
       automation_status: data.automation_status ?? 'not_automated',
+      deadline: data.deadline ? new Date(data.deadline) : null,
       attachment: data.attachment ?? null,
       assigned_to: data.assigned_to ?? null,
       created_at: new Date(),

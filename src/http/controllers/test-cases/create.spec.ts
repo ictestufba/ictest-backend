@@ -34,7 +34,10 @@ describe('Create Test Case (e2e)', () => {
         title: 'Test Case a1',
         status: 'open',
         description: 'Description of test case 1',
+        deadline: new Date(Date.now() + 12096e5),
       })
+
+    console.log('response :>> ', response)
 
     expect(response.statusCode).toEqual(201)
   })

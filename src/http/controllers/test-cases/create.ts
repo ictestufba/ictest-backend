@@ -31,6 +31,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     automation_status: z
       .enum(['not_automated', 'to_be_automated', 'automated'])
       .default('not_automated'),
+    deadline: z.string().nullable().default(null),
   })
 
   const {
@@ -43,6 +44,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     layer,
     behavior,
     automation_status,
+    deadline,
   } = createTestCaseBodySchema.parse(request.body)
 
   const createTestCaseUseCase = makeCreateTestCaseUseCase()
@@ -57,6 +59,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     layer,
     behavior,
     automation_status,
+    deadline,
   })
 
   return reply.status(201).send(testCase)

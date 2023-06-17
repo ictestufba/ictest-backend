@@ -111,6 +111,7 @@ model TestCase {
   layer             Layer            @default(not_set)
   behavior          Behavior         @default(not_set)
   automation_status AutomationStatus @default(not_automated)
+  deadline          DateTime?
   attachment        String?
   User              User?            @relation(fields: [assigned_to], references: [id])
   assigned_to       String?

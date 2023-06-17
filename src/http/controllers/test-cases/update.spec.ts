@@ -38,6 +38,8 @@ describe('Update Test Case (e2e)', () => {
 
     const testCaseId = testCaseResponse.body.test_case.id
 
+    const deadline = new Date(Date.now() + 12096e5)
+
     const response = await request(app.server)
       .patch(`/test-cases/${testCaseId}/update`)
       .set('Authorization', `Bearer ${token}`)
@@ -46,6 +48,7 @@ describe('Update Test Case (e2e)', () => {
           title: 'Test Case 1 Updated',
           status: 'success',
           description: 'Description of test case 1 updated',
+          deadline,
         },
       })
 
@@ -58,5 +61,6 @@ describe('Update Test Case (e2e)', () => {
         description: 'Description of test case 1 updated',
       }),
     )
+    expect(new Date(response.body.testCase.deadline)).toStrictEqual(deadline)
   })
 })

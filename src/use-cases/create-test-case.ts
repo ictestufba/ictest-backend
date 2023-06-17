@@ -21,6 +21,7 @@ interface CreateTestCaseUseCaseRequest {
   layer: Layer
   behavior: Behavior
   automation_status: AutomationStatus
+  deadline: Date | string | null
 }
 
 interface CreateTestCaseUseCaseResponse {
@@ -43,6 +44,7 @@ export class CreateTestCaseUseCase {
     layer,
     behavior,
     automation_status,
+    deadline,
   }: CreateTestCaseUseCaseRequest): Promise<CreateTestCaseUseCaseResponse> {
     const project = await this.projectsRepository.findById(project_id)
 
@@ -60,6 +62,7 @@ export class CreateTestCaseUseCase {
       layer,
       behavior,
       automation_status,
+      deadline,
     })
 
     return {
