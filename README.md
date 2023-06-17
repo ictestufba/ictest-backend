@@ -1,6 +1,7 @@
 # Back-end do ICTEST
 
 ## Configuração para rodar o projeto na sua máquina
+
 - Inicialmente, você precisa ter o Docker instalado na sua máquina.
 
 - Clone o repositório
@@ -31,7 +32,7 @@ npx prisma migrate dev
 npm run start:dev
 ```
 
-## Comandos
+## Comandos para testes
 
 ### Testes unitários
 

@@ -34,7 +34,9 @@ export class AddMemberToProjectUseCase {
       throw new UserDoesNotExistError()
     }
 
-    await this.projectsRepository.addMember(projectId, userEmail)
+    const userId = user.id
+
+    await this.projectsRepository.addMember(projectId, userId)
 
     return {
       userEmail,

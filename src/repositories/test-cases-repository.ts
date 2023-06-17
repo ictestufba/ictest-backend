@@ -9,6 +9,6 @@ export interface TestCasesRepository {
     testCaseId: string,
     data: Prisma.TestCaseUpdateInput,
   ): Promise<TestCase | null>
-  assignToUser(testCaseId: string, userEmail: string): Promise<TestCase | null>
-  getTestCasesAssignedToUser(userEmail: string): Promise<TestCase[]>
+  assignToUser(testCaseId: string, userId: string): Promise<TestCase>
+  getTestCasesByUser(userId: string): Promise<TestCase[]>
 }

@@ -3,32 +3,32 @@ import { TestCasesRepository } from '@/repositories/test-cases-repository'
 import { UsersRepository } from '@/repositories/users-repository'
 import { UserDoesNotExistError } from './errors/user-does-not-exist-error'
 
-interface GetTestCasesAssignedToUserUseCaseRequest {
+interface GetTestCasesByUserUseCaseRequest {
   userEmail: string
 }
 
-interface GetTestCasesAssignedToUserUseCaseResponse {
+interface GetTestCasesByUserUseCaseResponse {
   testCases: TestCase[]
 }
 
-export class GetTestCasesAssignedToUserUseCase {
+export class GetTestCasesByUserUseCase {
   constructor(
-    private usersRepository: UsersRepository,
     private testCasesRepository: TestCasesRepository,
+    private usersRepository: UsersRepository,
   ) {}
 
   async execute({
     userEmail,
-  }: GetTestCasesAssignedToUserUseCaseRequest): Promise<GetTestCasesAssignedToUserUseCaseResponse> {
+  }: GetTestCasesByUserUseCaseRequest): Promise<GetTestCasesByUserUseCaseResponse> {
     const user = await this.usersRepository.findByEmail(userEmail)
 
     if (!user) {
       throw new UserDoesNotExistError()
     }
 
-    const testCases = await this.testCasesRepository.getTestCasesAssignedToUser(
-      userEmail,
-    )
+    const userId = user.id
+
+    const testCases = await this.testCasesRepository.getTestCasesByUser(userId)
 
     return {
       testCases,

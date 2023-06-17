@@ -41,7 +41,7 @@ describe('Assign Test Case To User Use Case', () => {
       userEmail: user.email,
     })
 
-    expect(testCase.assigned_to).toEqual(user.email)
+    expect(testCase.assigned_to).toEqual(user.id)
   })
 
   it('should not be able to assign non-existing test case to a user', async () => {

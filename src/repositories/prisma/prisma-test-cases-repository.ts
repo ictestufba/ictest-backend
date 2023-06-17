@@ -51,19 +51,7 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     return testCase
   }
 
-  async assignToUser(testCaseId: string, userEmail: string) {
-    const user = await prisma.user.findUnique({
-      where: {
-        email: userEmail,
-      },
-    })
-
-    if (!user) {
-      return null
-    }
-
-    const userId = user.id
-
+  async assignToUser(testCaseId: string, userId: string) {
     const testCase = await prisma.testCase.update({
       where: {
         id: testCaseId,
@@ -78,10 +66,10 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     return testCase
   }
 
-  async getTestCasesAssignedToUser(userEmail: string) {
+  async getTestCasesByUser(userId: string) {
     const testCases = await prisma.testCase.findMany({
       where: {
-        assigned_to: userEmail,
+        assigned_to: userId,
       },
     })
 
