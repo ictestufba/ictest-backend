@@ -7,6 +7,7 @@ import { create } from './create'
 import { update } from './update'
 import { deleteProject } from './delete-project'
 import { addMember } from './add-member'
+import { getMembers } from './get-members'
 import { getTestCases } from './get-test-cases'
 
 export async function projectsRoutes(app: FastifyInstance) {
@@ -19,5 +20,6 @@ export async function projectsRoutes(app: FastifyInstance) {
   app.post('/projects', create)
   app.patch('/projects/:projectId/update', update)
   app.patch('/projects/:projectId/add-member', addMember)
+  app.get('/projects/:projectId/members', getMembers)
   app.delete('/projects/:projectId', deleteProject)
 }

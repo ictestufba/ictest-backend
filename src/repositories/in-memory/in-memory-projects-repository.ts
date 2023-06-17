@@ -60,4 +60,14 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 
     this.items[index].members.push(userId)
   }
+
+  async getMemberIds(projectId: string) {
+    const project = this.items.find((item) => item.id === projectId)
+
+    if (!project) {
+      return null
+    }
+
+    return project.members
+  }
 }

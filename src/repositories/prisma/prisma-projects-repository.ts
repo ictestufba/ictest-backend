@@ -65,4 +65,17 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
     })
   }
+
+  async getMemberIds(projectId: string): Promise<string[] | null> {
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+      },
+      include: {
+        members: true,
+      },
+    })
+
+    return project ? project.members.map((user) => user.user_id) : null
+  }
 }
