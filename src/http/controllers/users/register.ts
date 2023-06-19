@@ -15,10 +15,12 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     request.body,
   )
 
+  let user
+
   try {
     const registerUseCase = makeRegisterUseCase()
 
-    await registerUseCase.execute({
+    user = await registerUseCase.execute({
       name,
       email,
       password,
@@ -32,5 +34,5 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     throw err
   }
 
-  return reply.status(201).send()
+  return reply.status(201).send(user)
 }

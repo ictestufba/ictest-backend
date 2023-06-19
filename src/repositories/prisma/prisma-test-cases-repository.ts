@@ -71,6 +71,25 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
       },
     })
 
+    if (!testCase || testCase.is_deleted) return null
+
+    return testCase
+  }
+
+  async unassign(testCaseId: string) {
+    const testCase = await prisma.testCase.update({
+      where: {
+        id: testCaseId,
+      },
+      data: {
+        assigned_to: {
+          set: null,
+        },
+      },
+    })
+
+    if (!testCase || testCase.is_deleted) return null
+
     return testCase
   }
 

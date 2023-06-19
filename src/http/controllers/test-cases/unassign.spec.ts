@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Assign Test Case To User (e2e)', () => {
+describe('Unassign Test Case (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,12 +12,13 @@ describe('Assign Test Case To User (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to assign a test case to specific user', async () => {
+  it('should be able to unassign a test case', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
+    const email = 'janedoe@example.com'
     const createUserResponse = await request(app.server).post('/users').send({
       name: 'Jane Doe',
-      email: 'janedoe@example.com',
+      email,
       password: '123456',
     })
 
@@ -44,15 +45,22 @@ describe('Assign Test Case To User (e2e)', () => {
 
     const testCaseId = createTestCaseResponse.body.test_case.id
 
-    const response = await request(app.server)
+    const beforeUnassignResponse = await request(app.server)
       .patch(`/test-cases/${testCaseId}/assign`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        userEmail: 'janedoe@example.com',
+        userEmail: email,
       })
 
-    expect(response.body.testCase.assigned_to).toEqual(
+    expect(beforeUnassignResponse.body.testCase.assigned_to).toBe(
       createUserResponse.body.user.id,
     )
+
+    const response = await request(app.server)
+      .patch(`/test-cases/${testCaseId}/unassign`)
+      .set('Authorization', `Bearer ${token}`)
+      .send()
+
+    expect(response.body.testCase.assigned_to).toEqual(null)
   })
 })
