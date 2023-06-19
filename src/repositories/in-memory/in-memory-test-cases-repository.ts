@@ -69,6 +69,14 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
     return this.items[index]
   }
 
+  async unassign(testCaseId: string) {
+    const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
+
+    this.items[index].assigned_to = null
+
+    return this.items[index]
+  }
+
   async getTestCasesByUser(userId: string) {
     const testCases = this.items.filter(
       (testCase) => testCase.assigned_to === userId,

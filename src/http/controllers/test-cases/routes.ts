@@ -6,6 +6,7 @@ import { details } from './details'
 import { deleteTestCase } from './delete-test-case'
 import { update } from './update'
 import { assignToUser } from './assign-to-user'
+import { unassign } from './unassign'
 import { getByUser } from './get-by-user'
 
 export async function testCasesRoutes(app: FastifyInstance) {
@@ -17,5 +18,6 @@ export async function testCasesRoutes(app: FastifyInstance) {
   app.get('/test-cases/user/:userEmail', getByUser)
   app.patch('/test-cases/:testCaseId/update', update)
   app.patch('/test-cases/:testCaseId/assign', assignToUser)
+  app.patch('/test-cases/:testCaseId/unassign', unassign)
   app.delete('/test-cases/:testCaseId', deleteTestCase)
 }

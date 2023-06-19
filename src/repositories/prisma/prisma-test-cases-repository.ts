@@ -66,6 +66,21 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     return testCase
   }
 
+  async unassign(testCaseId: string) {
+    const testCase = await prisma.testCase.update({
+      where: {
+        id: testCaseId,
+      },
+      data: {
+        assigned_to: {
+          set: null,
+        },
+      },
+    })
+
+    return testCase
+  }
+
   async getTestCasesByUser(userId: string) {
     const testCases = await prisma.testCase.findMany({
       where: {

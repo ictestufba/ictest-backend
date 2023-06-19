@@ -37,8 +37,6 @@ describe('Create Test Case (e2e)', () => {
         deadline: new Date(Date.now() + 12096e5),
       })
 
-    console.log('response :>> ', response)
-
     expect(response.statusCode).toEqual(201)
   })
 })
