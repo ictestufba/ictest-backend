@@ -53,4 +53,28 @@ describe('Get Members From Project Use Case', () => {
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
+
+  it('should not be able to get the members from a deleted project', async () => {
+    const project = await projectsRepository.create({
+      name: 'Project 1',
+      code: 'PROJ1',
+    })
+
+    const user1 = await usersRepository.create({
+      id: 'user-1',
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password_hash: 'hashed-password',
+    })
+
+    await projectsRepository.addMember(project.id, user1.id)
+
+    await projectsRepository.delete(project.id)
+
+    await expect(() =>
+      sut.execute({
+        projectId: 'non-existing-project-id',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
 })

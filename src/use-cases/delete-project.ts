@@ -15,6 +15,6 @@ export class DeleteProjectUseCase {
       throw new ResourceNotFoundError()
     }
 
-    await this.projectsRepository.findByIdAndDelete(projectId)
+    await this.projectsRepository.delete(projectId)
   }
 }

@@ -10,9 +10,7 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   async findById(id: string) {
     const project = this.items.find((item) => item.id === id)
 
-    if (!project) {
-      return null
-    }
+    if (!project || project.is_deleted) return null
 
     return project
   }
@@ -26,6 +24,7 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
       members: [],
       created_at: new Date(),
       updated_at: new Date(),
+      is_deleted: false,
     }
 
     this.items.push(project)
@@ -34,21 +33,19 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   }
 
   async list() {
-    const projects = this.items
-
-    return projects
+    return this.items.filter((project) => !project.is_deleted)
   }
 
-  async findByIdAndDelete(projectId: string) {
-    this.items = this.items.filter((item) => item.id !== projectId)
+  async delete(projectId: string) {
+    const index = this.items.findIndex((project) => project.id === projectId)
+
+    this.items[index].is_deleted = true
   }
 
   async findByIdAndUpdate(projectId: string, data: Partial<Project>) {
     const index = this.items.findIndex((project) => project.id === projectId)
 
-    if (index === -1) {
-      return null
-    }
+    if (index === -1 || this.items[index].is_deleted) return null
 
     this.items[index] = { ...this.items[index], ...data }
 
@@ -64,9 +61,7 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   async getMemberIds(projectId: string) {
     const project = this.items.find((item) => item.id === projectId)
 
-    if (!project) {
-      return null
-    }
+    if (!project || project.is_deleted) return null
 
     return project.members
   }
