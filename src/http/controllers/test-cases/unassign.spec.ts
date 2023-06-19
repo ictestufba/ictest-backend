@@ -22,10 +22,13 @@ describe('Unassign Test Case (e2e)', () => {
       password: '123456',
     })
 
+    const userId = createUserResponse.body.user.id
+
     const createProjectResponse = await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',

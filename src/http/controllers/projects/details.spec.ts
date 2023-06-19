@@ -15,10 +15,19 @@ describe('Project Details (e2e)', () => {
   it('should be able to get the details of a project', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
+    const createUserResponse = await request(app.server).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    })
+
+    const userId = createUserResponse.body.user.id
+
     const createdProjectResponse = await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description of project 1',
@@ -31,7 +40,7 @@ describe('Project Details (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    console.log('response.body :>> ', response.body)
+    console.log('response.body :>> ', response.body.project.members)
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.project).toEqual(

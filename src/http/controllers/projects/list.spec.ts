@@ -15,10 +15,19 @@ describe('List Projects (e2e)', () => {
   it('should be able to list the projects', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
+    const createUserResponse = await request(app.server).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    })
+
+    const userId = createUserResponse.body.user.id
+
     await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description of project 1',
@@ -28,6 +37,7 @@ describe('List Projects (e2e)', () => {
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 2',
         code: 'PROJ2',
         description: 'Some description of project 2',

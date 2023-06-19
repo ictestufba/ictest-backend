@@ -21,9 +21,7 @@ describe('Create Project (e2e)', () => {
       password: '123456',
     })
 
-    console.log('createUserResponse.body :>> ', createUserResponse.body)
-
-    const userId = createUserResponse.body.id
+    const userId = createUserResponse.body.user.id
 
     const response = await request(app.server)
       .post('/projects')
@@ -34,8 +32,6 @@ describe('Create Project (e2e)', () => {
         code: 'PROJ1',
         description: 'Some description',
       })
-
-    console.log('response.body :>> ', response.body)
 
     expect(response.statusCode).toEqual(201)
   })

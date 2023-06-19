@@ -15,10 +15,19 @@ describe('Add Member To Project (e2e)', () => {
   it('should be able to add a member to specific project', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
+    const createUserResponse = await request(app.server).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    })
+
+    const userId = createUserResponse.body.user.id
+
     const createdProjectResponse = await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description of project 1',
@@ -26,9 +35,9 @@ describe('Add Member To Project (e2e)', () => {
 
     const projectId = createdProjectResponse.body.project.id
 
-    await request(app.server).post('/users').send({
-      name: 'Jane Doe',
-      email: 'janedoe@example.com',
+    const userToAdd = await request(app.server).post('/users').send({
+      name: 'Jane Doe 2',
+      email: '2-janedoe@example.com',
       password: '123456',
     })
 
@@ -36,7 +45,7 @@ describe('Add Member To Project (e2e)', () => {
       .patch(`/projects/${projectId}/add-member`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        userEmail: 'janedoe@example.com',
+        userEmail: '2-janedoe@example.com',
       })
 
     expect(response.statusCode).toEqual(200)
@@ -53,7 +62,7 @@ describe('Add Member To Project (e2e)', () => {
           expect.objectContaining({
             project_id: projectId,
             role: 'member',
-            user_id: expect.any(String),
+            user_id: userToAdd.body.user.id,
           }),
         ]),
       }),
