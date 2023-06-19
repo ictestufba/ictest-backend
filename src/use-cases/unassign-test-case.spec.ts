@@ -13,7 +13,7 @@ describe('Unassign Test Case Use Case', () => {
   })
 
   it('should be able unassign a test case', async () => {
-    const testCase = await testCasesRepository.create({
+    const testCaseAssigned = await testCasesRepository.create({
       project_id: 'mock-project-id',
       title: 'Test Case 1',
       status: 'open',
@@ -26,8 +26,8 @@ describe('Unassign Test Case Use Case', () => {
       assigned_to: 'mock-user',
     })
 
-    await sut.execute({
-      testCaseId: testCase.id,
+    const { testCase } = await sut.execute({
+      testCaseId: testCaseAssigned.id,
     })
 
     expect(testCase.assigned_to).toEqual(null)

@@ -16,13 +16,13 @@ export class UnassignTestCaseUseCase {
   async execute({
     testCaseId,
   }: UnassignTestCaseUseCaseRequest): Promise<UnassignTestCaseUseCaseResponse> {
-    const testCase = await this.testCasesRepository.findById(testCaseId)
+    const testCase = await this.testCasesRepository.unassign(testCaseId)
 
     if (!testCase) {
       throw new ResourceNotFoundError()
     }
 
-    await this.testCasesRepository.unassign(testCaseId)
+    await this.testCasesRepository.findById(testCaseId)
 
     return {
       testCase,

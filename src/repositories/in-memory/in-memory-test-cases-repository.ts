@@ -65,6 +65,8 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
   async assignToUser(testCaseId: string, userId: string) {
     const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
 
+    if (index === -1 || this.items[index].is_deleted) return null
+
     this.items[index].assigned_to = userId
 
     return this.items[index]
@@ -72,6 +74,8 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
 
   async unassign(testCaseId: string) {
     const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
+
+    if (index === -1 || this.items[index].is_deleted) return null
 
     this.items[index].assigned_to = null
 

@@ -23,12 +23,6 @@ export class AssignTestCaseToUserUseCase {
     testCaseId,
     userEmail,
   }: AssignTestCaseToUserUseCaseRequest): Promise<AssignTestCaseToUserUseCaseResponse> {
-    const testCase = await this.testCasesRepository.findById(testCaseId)
-
-    if (!testCase) {
-      throw new ResourceNotFoundError()
-    }
-
     const user = await this.usersRepository.findByEmail(userEmail)
 
     if (!user) {
@@ -37,7 +31,18 @@ export class AssignTestCaseToUserUseCase {
 
     const userId = user.id
 
-    await this.testCasesRepository.assignToUser(testCaseId, userId)
+    const testCaseFound = await this.testCasesRepository.assignToUser(
+      testCaseId,
+      userId,
+    )
+
+    if (!testCaseFound) {
+      throw new ResourceNotFoundError()
+    }
+
+    const testCase = (await this.testCasesRepository.findById(
+      testCaseId,
+    )) as TestCase
 
     return {
       testCase,

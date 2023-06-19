@@ -71,6 +71,8 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
       },
     })
 
+    if (!testCase || testCase.is_deleted) return null
+
     return testCase
   }
 
@@ -85,6 +87,8 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
         },
       },
     })
+
+    if (!testCase || testCase.is_deleted) return null
 
     return testCase
   }

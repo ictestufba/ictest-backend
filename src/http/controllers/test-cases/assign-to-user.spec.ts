@@ -15,7 +15,7 @@ describe('Assign Test Case To User (e2e)', () => {
   it('should be able to assign a test case to specific user', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
-    await request(app.server).post('/users').send({
+    const createUserResponse = await request(app.server).post('/users').send({
       name: 'Jane Doe',
       email: 'janedoe@example.com',
       password: '123456',
@@ -44,18 +44,15 @@ describe('Assign Test Case To User (e2e)', () => {
 
     const testCaseId = createTestCaseResponse.body.test_case.id
 
-    await request(app.server)
+    const response = await request(app.server)
       .patch(`/test-cases/${testCaseId}/assign`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         userEmail: 'janedoe@example.com',
       })
 
-    const response = await request(app.server)
-      .get(`/test-cases/${testCaseId}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-
-    expect(response.body.testCase.assigned_to).toEqual(expect.any(String))
+    expect(response.body.testCase.assigned_to).toEqual(
+      createUserResponse.body.user.id,
+    )
   })
 })

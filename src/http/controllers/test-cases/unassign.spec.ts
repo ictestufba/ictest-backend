@@ -15,9 +15,10 @@ describe('Unassign Test Case (e2e)', () => {
   it('should be able to unassign a test case', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
-    await request(app.server).post('/users').send({
+    const email = 'janedoe@example.com'
+    const createUserResponse = await request(app.server).post('/users').send({
       name: 'Jane Doe',
-      email: 'janedoe@example.com',
+      email,
       password: '123456',
     })
 
@@ -44,24 +45,19 @@ describe('Unassign Test Case (e2e)', () => {
 
     const testCaseId = createTestCaseResponse.body.test_case.id
 
-    await request(app.server)
+    const beforeUnassignResponse = await request(app.server)
       .patch(`/test-cases/${testCaseId}/assign`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        userEmail: 'janedoe@example.com',
+        userEmail: email,
       })
 
-    const beforeUnassignResponse = await request(app.server)
-      .get(`/test-cases/${testCaseId}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-
-    expect(beforeUnassignResponse.body.testCase.assigned_to).toEqual(
-      expect.any(String),
+    expect(beforeUnassignResponse.body.testCase.assigned_to).toBe(
+      createUserResponse.body.user.id,
     )
 
     const response = await request(app.server)
-      .get(`/test-cases/${testCaseId}`)
+      .patch(`/test-cases/${testCaseId}/unassign`)
       .set('Authorization', `Bearer ${token}`)
       .send()
 
