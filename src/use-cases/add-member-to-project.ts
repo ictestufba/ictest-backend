@@ -36,7 +36,7 @@ export class AddMemberToProjectUseCase {
 
     const userId = user.id
 
-    await this.projectsRepository.addMember(projectId, userId)
+    await this.projectsRepository.addMember(projectId, userId, 'member')
 
     return {
       userEmail,

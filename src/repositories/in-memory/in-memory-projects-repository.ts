@@ -52,7 +52,7 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     return this.items[index]
   }
 
-  async addMember(projectId: string, userId: string) {
+  async addMember(projectId: string, userId: string, role: string) {
     const index = this.items.findIndex((project) => project.id === projectId)
 
     this.items[index].members.push(userId)

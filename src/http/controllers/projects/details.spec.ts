@@ -31,6 +31,8 @@ describe('Project Details (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
+    console.log('response.body :>> ', response.body)
+
     expect(response.statusCode).toEqual(200)
     expect(response.body.project).toEqual(
       expect.objectContaining({

@@ -4,18 +4,22 @@ import { makeCreateProjectUseCase } from '@/use-cases/factories/make-create-proj
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createProjectBodySchema = z.object({
+    userId: z.string().uuid(),
     name: z.string(),
     code: z.string().max(10),
     description: z.string().nullable(),
   })
 
-  const { name, code, description } = createProjectBodySchema.parse(
+  console.log('request.body :>> ', request.body)
+
+  const { userId, name, code, description } = createProjectBodySchema.parse(
     request.body,
   )
 
   const createProjectUseCase = makeCreateProjectUseCase()
 
   const project = await createProjectUseCase.execute({
+    userId,
     name,
     code,
     description,

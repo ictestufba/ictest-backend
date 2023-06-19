@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma, Role } from '@prisma/client'
 
 import { ProjectsRepository } from '../projects-repository'
 
@@ -57,7 +57,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return project
   }
 
-  async addMember(projectId: string, userId: string) {
+  async addMember(projectId: string, userId: string, role: Role) {
     await prisma.project.update({
       where: {
         id: projectId,
@@ -66,7 +66,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
         members: {
           create: {
             user_id: userId,
-            role: 'member',
+            role,
           },
         },
       },

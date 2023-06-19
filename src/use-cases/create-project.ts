@@ -2,6 +2,7 @@ import { Project } from '@prisma/client'
 import { ProjectsRepository } from '@/repositories/projects-repository'
 
 interface CreateProjectUseCaseRequest {
+  userId: string
   name: string
   code: string
   description: string | null
@@ -15,6 +16,7 @@ export class CreateProjectUseCase {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   async execute({
+    userId,
     name,
     code,
     description,
@@ -24,6 +26,10 @@ export class CreateProjectUseCase {
       code,
       description,
     })
+
+    const projectId = project.id
+
+    await this.projectsRepository.addMember(projectId, userId, 'admin')
 
     return {
       project,
