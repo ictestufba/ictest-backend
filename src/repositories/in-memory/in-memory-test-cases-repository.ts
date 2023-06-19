@@ -8,9 +8,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
   async findById(id: string) {
     const testCase = this.items.find((item) => item.id === id)
 
-    if (!testCase || testCase.is_deleted) {
-      return null
-    }
+    if (!testCase || testCase.is_deleted) return null
 
     return testCase
   }
@@ -54,7 +52,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
     return testCases
   }
 
-  async update(testCaseId: string, data: Partial<TestCase>) {
+  async findByAndUpdate(testCaseId: string, data: Partial<TestCase>) {
     const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
 
     if (index === -1 || this.items[index].is_deleted) return null

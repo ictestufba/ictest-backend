@@ -18,14 +18,18 @@ export class UpdateProjectUseCase {
     projectId,
     data,
   }: UpdateProjectUseCaseRequest): Promise<UpdateProjectUseCaseResponse> {
-    const project = await this.projectsRepository.findByIdAndUpdate(
+    const projectFound = await this.projectsRepository.findByIdAndUpdate(
       projectId,
       data,
     )
 
-    if (!project) {
+    if (!projectFound) {
       throw new ResourceNotFoundError()
     }
+
+    const project = (await this.projectsRepository.findById(
+      projectId,
+    )) as Project
 
     return {
       project,

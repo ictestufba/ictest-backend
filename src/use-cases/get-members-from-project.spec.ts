@@ -69,7 +69,7 @@ describe('Get Members From Project Use Case', () => {
 
     await projectsRepository.addMember(project.id, user1.id)
 
-    await projectsRepository.findByIdAndDelete(project.id)
+    await projectsRepository.delete(project.id)
 
     await expect(() =>
       sut.execute({

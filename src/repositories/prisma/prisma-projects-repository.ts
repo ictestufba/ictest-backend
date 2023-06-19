@@ -19,21 +19,21 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return project
   }
 
-  async create(data: Prisma.ProjectCreateInput) {
-    const project = await prisma.project.create({
-      data,
-    })
-
-    return project
-  }
-
   async list() {
     return prisma.project.findMany({
       where: { is_deleted: false },
     })
   }
 
-  async findByIdAndDelete(projectId: string) {
+  async create(data: Prisma.ProjectCreateInput) {
+    const project = await prisma.project.create({
+      data: { ...data, is_deleted: false },
+    })
+
+    return project
+  }
+
+  async delete(projectId: string) {
     await prisma.project.update({
       where: {
         id: projectId,
@@ -83,7 +83,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
     })
 
-    if (!project || project?.is_deleted) return null
+    if (!project || project.is_deleted) return null
 
     return project.members.map((user) => user.user_id)
   }

@@ -30,7 +30,7 @@ describe('List Project Use Case', () => {
       description: null,
     })
 
-    await projectsRepository.findByIdAndDelete(project.id)
+    await projectsRepository.delete(project.id)
 
     const { projects } = await sut.execute()
 

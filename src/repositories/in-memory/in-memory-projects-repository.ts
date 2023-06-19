@@ -33,10 +33,10 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
   }
 
   async list() {
-    return this.items.filter((project) => project.is_deleted === false)
+    return this.items.filter((project) => !project.is_deleted)
   }
 
-  async findByIdAndDelete(projectId: string) {
+  async delete(projectId: string) {
     const index = this.items.findIndex((project) => project.id === projectId)
 
     this.items[index].is_deleted = true

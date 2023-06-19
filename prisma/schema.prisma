@@ -29,7 +29,7 @@ model Project {
   test_cases  TestCase[]
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
-  is_deleted  Boolean?   @default(false)
+  is_deleted  Boolean?   
 
   members UsersOnProjectsWithRoles[]
 
@@ -118,7 +118,7 @@ model TestCase {
   assigned_to       String?
   created_at        DateTime         @default(now())
   updated_at        DateTime         @updatedAt
-  is_deleted        Boolean?         @default(false)
+  is_deleted        Boolean?         
 
   @@map("test_cases")
 }

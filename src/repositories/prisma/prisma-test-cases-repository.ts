@@ -4,14 +4,6 @@ import { Prisma } from '@prisma/client'
 import { TestCasesRepository } from '../test-cases-repository'
 
 export class PrismaTestCasesRepository implements TestCasesRepository {
-  async create(data: Prisma.TestCaseCreateInput) {
-    const testCase = await prisma.testCase.create({
-      data,
-    })
-
-    return testCase
-  }
-
   async findById(id: string) {
     const testCase = await prisma.testCase.findUnique({
       where: {
@@ -20,6 +12,14 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     })
 
     if (!testCase || testCase.is_deleted) return null
+
+    return testCase
+  }
+
+  async create(data: Prisma.TestCaseCreateInput) {
+    const testCase = await prisma.testCase.create({
+      data: { ...data, is_deleted: false },
+    })
 
     return testCase
   }
@@ -35,18 +35,7 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     })
   }
 
-  async getTestCasesByProjectId(projectId: string) {
-    const testCases = await prisma.testCase.findMany({
-      where: {
-        project_id: projectId,
-        is_deleted: false,
-      },
-    })
-
-    return testCases
-  }
-
-  async update(testCaseId: string, data: Prisma.TestCaseUpdateInput) {
+  async findByAndUpdate(testCaseId: string, data: Prisma.TestCaseUpdateInput) {
     const testCase = await prisma.testCase.update({
       where: {
         id: testCaseId,
@@ -57,6 +46,17 @@ export class PrismaTestCasesRepository implements TestCasesRepository {
     if (!testCase || testCase.is_deleted) return null
 
     return testCase
+  }
+
+  async getTestCasesByProjectId(projectId: string) {
+    const testCases = await prisma.testCase.findMany({
+      where: {
+        project_id: projectId,
+        is_deleted: false,
+      },
+    })
+
+    return testCases
   }
 
   async assignToUser(testCaseId: string, userId: string) {
