@@ -64,15 +64,14 @@ describe('Get Test Cases By User Use Case', () => {
     await testCasesRepository.assignToUser(testCase1.id, user.id)
     await testCasesRepository.assignToUser(testCase3.id, user.id)
 
+    await testCasesRepository.delete(testCase3.id)
+
     const { testCases } = await sut.execute({
       userEmail: user.email,
     })
 
-    expect(testCases).toHaveLength(2)
-    expect(testCases).toEqual([
-      expect.objectContaining({ title: 'Test Case 1' }),
-      expect.objectContaining({ title: 'Test Case 3' }),
-    ])
+    expect(testCases).toHaveLength(1)
+    expect(testCases[0].title).toEqual('Test Case 1')
   })
 
   it('should not be able to get the test cases from a non-existing user', async () => {

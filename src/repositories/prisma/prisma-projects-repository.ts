@@ -14,27 +14,32 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
     })
 
-    return project
-  }
-
-  async create(data: Prisma.ProjectCreateInput) {
-    const project = await prisma.project.create({
-      data,
-    })
+    if (!project || project.is_deleted) return null
 
     return project
   }
 
   async list() {
-    const projects = await prisma.project.findMany()
-
-    return projects
+    return prisma.project.findMany({
+      where: { is_deleted: false },
+    })
   }
 
-  async findByIdAndDelete(projectId: string) {
-    await prisma.project.delete({
+  async create(data: Prisma.ProjectCreateInput) {
+    const project = await prisma.project.create({
+      data: { ...data, is_deleted: false },
+    })
+
+    return project
+  }
+
+  async delete(projectId: string) {
+    await prisma.project.update({
       where: {
         id: projectId,
+      },
+      data: {
+        is_deleted: true,
       },
     })
   }
@@ -46,6 +51,8 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
       data,
     })
+
+    if (!project || project.is_deleted) return null
 
     return project
   }
@@ -76,6 +83,8 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       },
     })
 
-    return project ? project.members.map((user) => user.user_id) : null
+    if (!project || project.is_deleted) return null
+
+    return project.members.map((user) => user.user_id)
   }
 }

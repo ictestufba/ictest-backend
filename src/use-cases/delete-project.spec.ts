@@ -13,21 +13,9 @@ describe('Delete Project Use Case', () => {
   })
 
   it('should be able to delete a project', async () => {
-    await projectsRepository.create({
+    const project = await projectsRepository.create({
       name: 'Project 1',
       code: 'PROJ1',
-      description: null,
-    })
-
-    const project = await projectsRepository.create({
-      name: 'Project 2',
-      code: 'PROJ2',
-      description: null,
-    })
-
-    await projectsRepository.create({
-      name: 'Project 3',
-      code: 'PROJ3',
       description: null,
     })
 
@@ -35,13 +23,9 @@ describe('Delete Project Use Case', () => {
       projectId: project.id,
     })
 
-    const projects = await projectsRepository.list()
+    const result = await projectsRepository.findById(project.id)
 
-    expect(projects).toHaveLength(2)
-    expect(projects).toEqual([
-      expect.objectContaining({ name: 'Project 1' }),
-      expect.objectContaining({ name: 'Project 3' }),
-    ])
+    expect(result).toBeNull()
   })
 
   it('should not be able to delete a non-existing project', async () => {

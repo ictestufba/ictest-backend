@@ -5,14 +5,14 @@ import { ListProjectsUseCase } from './list-projects'
 let projectsRepository: InMemoryProjectsRepository
 let sut: ListProjectsUseCase
 
-describe('Create Project Use Case', () => {
+describe('List Project Use Case', () => {
   beforeEach(() => {
     projectsRepository = new InMemoryProjectsRepository()
     sut = new ListProjectsUseCase(projectsRepository)
   })
 
-  it('should be able to list projects', async () => {
-    await projectsRepository.create({
+  it('should be able to list non-deleted projects', async () => {
+    const project = await projectsRepository.create({
       name: 'Project 1',
       code: 'PROJ1',
       description: null,
@@ -24,12 +24,20 @@ describe('Create Project Use Case', () => {
       description: null,
     })
 
+    await projectsRepository.create({
+      name: 'Project 3',
+      code: 'PROJ3',
+      description: null,
+    })
+
+    await projectsRepository.delete(project.id)
+
     const { projects } = await sut.execute()
 
     expect(projects).toHaveLength(2)
     expect(projects).toEqual([
-      expect.objectContaining({ name: 'Project 1' }),
       expect.objectContaining({ name: 'Project 2' }),
+      expect.objectContaining({ name: 'Project 3' }),
     ])
   })
 })

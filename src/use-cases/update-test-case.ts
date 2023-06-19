@@ -18,11 +18,18 @@ export class UpdateTestCaseUseCase {
     testCaseId,
     data,
   }: UpdateTestCaseUseCaseRequest): Promise<UpdateTestCaseUseCaseResponse> {
-    const testCase = await this.testCasesRepository.update(testCaseId, data)
+    const testCaseFound = await this.testCasesRepository.findByAndUpdate(
+      testCaseId,
+      data,
+    )
 
-    if (!testCase) {
+    if (!testCaseFound) {
       throw new ResourceNotFoundError()
     }
+
+    const testCase = (await this.testCasesRepository.findById(
+      testCaseId,
+    )) as TestCase
 
     return {
       testCase,

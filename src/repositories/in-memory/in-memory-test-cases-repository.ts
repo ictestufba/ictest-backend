@@ -8,9 +8,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
   async findById(id: string) {
     const testCase = this.items.find((item) => item.id === id)
 
-    if (!testCase) {
-      return null
-    }
+    if (!testCase || testCase.is_deleted) return null
 
     return testCase
   }
@@ -32,6 +30,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
       assigned_to: data.assigned_to ?? null,
       created_at: new Date(),
       updated_at: new Date(),
+      is_deleted: false,
     }
 
     this.items.push(testCase)
@@ -40,21 +39,23 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
   }
 
   async delete(testCaseId: string) {
-    this.items = this.items.filter((item) => item.id !== testCaseId)
+    const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
+
+    this.items[index].is_deleted = true
   }
 
   async getTestCasesByProjectId(projectId: string): Promise<TestCase[]> {
-    const testCases = this.items.filter((item) => item.project_id === projectId)
+    const testCases = this.items.filter(
+      (item) => item.project_id === projectId && !item.is_deleted,
+    )
 
     return testCases
   }
 
-  async update(testCaseId: string, data: Partial<TestCase>) {
+  async findByAndUpdate(testCaseId: string, data: Partial<TestCase>) {
     const index = this.items.findIndex((testCase) => testCase.id === testCaseId)
 
-    if (index === -1) {
-      return null
-    }
+    if (index === -1 || this.items[index].is_deleted) return null
 
     this.items[index] = { ...this.items[index], ...data }
 
@@ -71,7 +72,7 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
 
   async getTestCasesByUser(userId: string) {
     const testCases = this.items.filter(
-      (testCase) => testCase.assigned_to === userId,
+      (testCase) => testCase.assigned_to === userId && !testCase.is_deleted,
     )
 
     return testCases
