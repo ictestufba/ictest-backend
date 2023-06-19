@@ -15,16 +15,19 @@ describe('Get Test Cases By User (e2e)', () => {
   it('should be able to get test cases by specific user', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
-    await request(app.server).post('/users').send({
+    const createUserResponse = await request(app.server).post('/users').send({
       name: 'Jane Doe',
       email: 'janedoe@example.com',
       password: '123456',
     })
 
+    const userId = createUserResponse.body.user.id
+
     const createProjectResponse = await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',

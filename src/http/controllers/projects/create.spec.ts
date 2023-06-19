@@ -15,10 +15,19 @@ describe('Create Project (e2e)', () => {
   it('should be able to create a project', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
+    const createUserResponse = await request(app.server).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    })
+
+    const userId = createUserResponse.body.user.id
+
     const response = await request(app.server)
       .post('/projects')
       .set('Authorization', `Bearer ${token}`)
       .send({
+        userId,
         name: 'Project 1',
         code: 'PROJ1',
         description: 'Some description',

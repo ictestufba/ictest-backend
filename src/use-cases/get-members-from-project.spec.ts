@@ -35,9 +35,9 @@ describe('Get Members From Project Use Case', () => {
       password_hash: 'hashed-password',
     })
 
-    await projectsRepository.addMember(project.id, user1.id)
+    await projectsRepository.addMember(project.id, user1.id, 'member')
 
-    await projectsRepository.addMember(project.id, user2.id)
+    await projectsRepository.addMember(project.id, user2.id, 'member')
 
     const { users } = await sut.execute({ projectId: project.id })
 
@@ -67,7 +67,7 @@ describe('Get Members From Project Use Case', () => {
       password_hash: 'hashed-password',
     })
 
-    await projectsRepository.addMember(project.id, user1.id)
+    await projectsRepository.addMember(project.id, user1.id, 'member')
 
     await projectsRepository.delete(project.id)
 
