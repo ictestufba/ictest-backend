@@ -11,4 +11,5 @@ export interface ProjectsRepository {
   ): Promise<Project | null>
   addMember(projectId: string, userId: string, role: string): Promise<void>
   getMemberIds(projectId: string): Promise<string[] | null>
+  removeMember(projectId: string, userId: string): Promise<void>
 }

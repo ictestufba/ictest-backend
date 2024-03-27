@@ -24,6 +24,18 @@ export class PrismaUsersRepository implements UsersRepository {
     return user
   }
 
+  async findByPartialEmail(email: string) {
+    const users = await prisma.user.findMany({
+      where: {
+        email: {
+          contains: email,
+        },
+      },
+    })
+
+    return users
+  }
+
   async create(data: Prisma.UserCreateInput) {
     const user = await prisma.user.create({
       data,

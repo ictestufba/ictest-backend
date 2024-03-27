@@ -22,6 +22,14 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   async list() {
     return prisma.project.findMany({
       where: { is_deleted: false },
+      include: {
+        members: {
+          include: {
+            user: true,
+          },
+        },
+        test_cases: true,
+      },
     })
   }
 
@@ -67,6 +75,24 @@ export class PrismaProjectsRepository implements ProjectsRepository {
           create: {
             user_id: userId,
             role,
+          },
+        },
+      },
+    })
+  }
+
+  async removeMember(projectId: string, userId: string) {
+    await prisma.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        members: {
+          delete: {
+            user_id_project_id: {
+              user_id: userId,
+              project_id: projectId,
+            },
           },
         },
       },
