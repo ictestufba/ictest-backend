@@ -10,49 +10,39 @@ on:
 jobs:
   eslint:
     runs-on: ubuntu-latest
-    container: node:14-alpine
+    container: node:18-alpine
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
       - name: Install Dependencies
         run: npm ci
       - name: Check the ESLint
         run: npm run lint
   audit:
     runs-on: ubuntu-latest
-    container: node:14-alpine
+    container: node:18-alpine
     steps:
       - uses: actions/checkout@v4
       - name: Audit The Dependencies
         run: npm audit
   type_check:
     runs-on: ubuntu-latest
-    container: node:14-alpine
+    container: node:18-alpine
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
       - name: Install Dependencies
         run: npm ci
       - name: Check Type
         run: npx tsc -noEmit
   unit-test:
     runs-on: ubuntu-latest
+    container: node:18-alpine
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
       - run: npm ci
       - run: npm run test:coverage
   e2e-test:
     runs-on: ubuntu-latest
+    container: node:18-alpine
     services:
       postgres:
         image: bitnami/postgresql
@@ -64,10 +54,6 @@ jobs:
           POSTGRESQL_DATABASE: ictest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
       - run: npm ci
       - run: npm run test:e2e
         env:
