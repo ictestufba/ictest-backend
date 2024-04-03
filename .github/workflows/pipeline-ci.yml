@@ -62,3 +62,10 @@ jobs:
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/ictest?schema=public"
+  build:
+    runs-on: ubuntu-latest
+    needs: [eslint,audit,type_check,unit_test,e2e_test]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build The Dockerfile
+        run: docker build --pull --no-cache .
