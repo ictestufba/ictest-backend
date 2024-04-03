@@ -1,5 +1,5 @@
 import { InMemoryProjectsRepository } from '@/repositories/in-memory/in-memory-projects-repository'
-import { expect, describe, it, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { ListProjectsUseCase } from './list-projects'
 
 let projectsRepository: InMemoryProjectsRepository

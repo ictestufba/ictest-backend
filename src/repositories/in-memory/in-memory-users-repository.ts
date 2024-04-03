@@ -1,4 +1,4 @@
-import { User, Prisma } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 import { UsersRepository } from '../users-repository'
 
 export class InMemoryUsersRepository implements UsersRepository {
@@ -37,5 +37,10 @@ export class InMemoryUsersRepository implements UsersRepository {
     this.items.push(user)
 
     return user
+  }
+
+  async findByPartialEmail(email: string) {
+    const users = this.items.filter((user) => user.email.includes(email))
+    return Promise.resolve(users)
   }
 }

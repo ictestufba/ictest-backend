@@ -1,12 +1,12 @@
-import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
-import fastify from 'fastify'
 import cors from '@fastify/cors'
+import fastifyJwt from '@fastify/jwt'
+import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
-import { usersRoutes } from './http/controllers/users/routes'
 import { projectsRoutes } from './http/controllers/projects/routes'
 import { testCasesRoutes } from './http/controllers/test-cases/routes'
+import { usersRoutes } from './http/controllers/users/routes'
 
 export const app = fastify()
 
@@ -23,7 +23,7 @@ app.register(fastifyJwt, {
     signed: false,
   },
   sign: {
-    expiresIn: '10m',
+    expiresIn: '120m',
   },
 })
 

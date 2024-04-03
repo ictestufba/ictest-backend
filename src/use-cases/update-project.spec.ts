@@ -1,7 +1,7 @@
 import { InMemoryProjectsRepository } from '@/repositories/in-memory/in-memory-projects-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { UpdateProjectUseCase } from './update-project'
-import { expect, describe, it, beforeEach } from 'vitest'
 
 let projectsRepository: InMemoryProjectsRepository
 let sut: UpdateProjectUseCase

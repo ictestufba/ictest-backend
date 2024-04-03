@@ -1,8 +1,8 @@
 import { InMemoryProjectsRepository } from '@/repositories/in-memory/in-memory-projects-repository'
 import { InMemoryTestCasesRepository } from '@/repositories/in-memory/in-memory-test-cases-repository'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateTestCaseUseCase } from './create-test-case'
-import { expect, describe, it, beforeEach } from 'vitest'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let projectsRepository: InMemoryProjectsRepository
 let testCasesRepository: InMemoryTestCasesRepository
@@ -33,6 +33,7 @@ describe('Create Test Case Use Case', () => {
       behavior: 'not_set',
       layer: 'not_set',
       type: 'other',
+      attachment: null,
     })
 
     expect(test_case.id).toEqual(expect.any(String))
@@ -52,6 +53,7 @@ describe('Create Test Case Use Case', () => {
         behavior: 'not_set',
         layer: 'not_set',
         type: 'other',
+        attachment: null,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
