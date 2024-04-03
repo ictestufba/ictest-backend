@@ -32,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       - name: Check Type
-        run: npx tsc -noEmit
+        run: npm run ts.check
   unit-test:
     runs-on: ubuntu-latest
     container: node:18-alpine
@@ -64,8 +64,40 @@ jobs:
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/ictest?schema=public"
   build:
     runs-on: ubuntu-latest
+    container: node:18-alpine
     needs: [eslint,audit,type_check,unit_test,e2e_test]
     steps:
       - uses: actions/checkout@v4
-      - name: Build The Dockerfile
-        run: docker build --pull --no-cache .
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build the javascript
+        run: npm run build
+  deploy: 
+    runs-on: ubuntu-latest
+    needs: [lint,build,audit,type_check,unit_test,e2e_test]
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Env Vars on Vercel Project
+        uses: dkershner6/vercel-set-env-action@v3
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          projectName: ictest-backend
+          envVariableKeys: NODE_ENV,JWT_SECRET,DATABASE_URL
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          TARGET_NODE_ENV: production
+          TYPE_NODE_ENV: plain
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          TARGET_JWT_SECRET: production
+          TYPE_JWT_SECRET: encrypted 
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TARGET_DATABASE_URL: production
+          TYPE_DATABASE_URL: encrypted 
+      - name: deploy api to vercel      
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          vercel-args: '--prod' 
