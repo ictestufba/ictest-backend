@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
-      - run: npm run test:coverage
+      - run: npm run test
   e2e-test:
     runs-on: ubuntu-latest
     container: node:18-alpine

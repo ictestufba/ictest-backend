@@ -1,6 +1,6 @@
 import { Prisma, Project } from '@prisma/client'
-import { ProjectsRepository } from '../projects-repository'
 import { randomUUID } from 'node:crypto'
+import { ProjectsRepository } from '../projects-repository'
 
 type ProjectWithMembers = Project & { members: string[] }
 
@@ -64,5 +64,14 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     if (!project || project.is_deleted) return null
 
     return project.members
+  }
+
+  async removeMember(projectId: string, userId: string) {
+    const project = this.items.find((item) => item.id === projectId)
+    if (!project || project.is_deleted) return
+    const index = project.members.indexOf(userId)
+    if (index !== -1) {
+      project.members.splice(index, 1)
+    }
   }
 }
