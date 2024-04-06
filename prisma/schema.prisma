@@ -105,6 +105,8 @@ model TestCase {
   title             String
   status            Status           @default(open)
   description       String?
+  error_description String?
+  error_attachment  String?
   Project           Project?         @relation(fields: [project_id], references: [id])
   project_id        String?
   priority          Priority         @default(not_set)

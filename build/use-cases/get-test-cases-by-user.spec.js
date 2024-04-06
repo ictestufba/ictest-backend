@@ -17674,7 +17674,9 @@ var InMemoryTestCasesRepository = class {
       assigned_to: data.assigned_to ?? null,
       created_at: /* @__PURE__ */ new Date(),
       updated_at: /* @__PURE__ */ new Date(),
-      is_deleted: false
+      is_deleted: false,
+      error_attachment: null,
+      error_description: null
     };
     this.items.push(testCase);
     return testCase;

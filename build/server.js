@@ -937,9 +937,6 @@ async function deleteTestCase(request, reply) {
   return reply.status(200).send(testCase);
 }
 
-// src/http/controllers/test-cases/update.ts
-var import_zod13 = require("zod");
-
 // src/use-cases/update-test-case.ts
 var UpdateTestCaseUseCase = class {
   constructor(testCasesRepository) {
@@ -973,6 +970,7 @@ function makeUpdateTestCaseUseCase() {
 }
 
 // src/http/controllers/test-cases/update.ts
+var import_zod13 = require("zod");
 async function update2(request, reply) {
   const updateTestCaseParamsSchema = import_zod13.z.object({
     testCaseId: import_zod13.z.string().uuid()
@@ -982,6 +980,8 @@ async function update2(request, reply) {
       title: import_zod13.z.string().optional(),
       status: import_zod13.z.enum(["open", "in_progress", "error", "success"]).optional(),
       description: import_zod13.z.string().nullable().optional(),
+      error_description: import_zod13.z.string().nullable().optional(),
+      error_attachment: import_zod13.z.string().nullable().optional(),
       priority: import_zod13.z.enum(["not_set", "high", "medium", "low"]).optional(),
       type: import_zod13.z.enum([
         "other",

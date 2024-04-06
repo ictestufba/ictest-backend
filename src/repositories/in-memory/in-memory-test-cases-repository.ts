@@ -1,6 +1,6 @@
 import { Prisma, TestCase } from '@prisma/client'
-import { TestCasesRepository } from '../test-cases-repository'
 import { randomUUID } from 'node:crypto'
+import { TestCasesRepository } from '../test-cases-repository'
 
 export class InMemoryTestCasesRepository implements TestCasesRepository {
   public items: TestCase[] = []
@@ -31,6 +31,8 @@ export class InMemoryTestCasesRepository implements TestCasesRepository {
       created_at: new Date(),
       updated_at: new Date(),
       is_deleted: false,
+      error_attachment: null,
+      error_description: null,
     }
 
     this.items.push(testCase)

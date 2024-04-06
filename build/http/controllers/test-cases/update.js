@@ -23,7 +23,6 @@ __export(update_exports, {
   update: () => update
 });
 module.exports = __toCommonJS(update_exports);
-var import_zod2 = require("zod");
 
 // src/env/index.ts
 var import_config = require("dotenv/config");
@@ -175,6 +174,7 @@ function makeUpdateTestCaseUseCase() {
 }
 
 // src/http/controllers/test-cases/update.ts
+var import_zod2 = require("zod");
 async function update(request, reply) {
   const updateTestCaseParamsSchema = import_zod2.z.object({
     testCaseId: import_zod2.z.string().uuid()
@@ -184,6 +184,8 @@ async function update(request, reply) {
       title: import_zod2.z.string().optional(),
       status: import_zod2.z.enum(["open", "in_progress", "error", "success"]).optional(),
       description: import_zod2.z.string().nullable().optional(),
+      error_description: import_zod2.z.string().nullable().optional(),
+      error_attachment: import_zod2.z.string().nullable().optional(),
       priority: import_zod2.z.enum(["not_set", "high", "medium", "low"]).optional(),
       type: import_zod2.z.enum([
         "other",

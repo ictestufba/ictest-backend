@@ -1,6 +1,6 @@
+import { makeUpdateTestCaseUseCase } from '@/use-cases/factories/make-update-test-case-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeUpdateTestCaseUseCase } from '@/use-cases/factories/make-update-test-case-use-case'
 
 export async function update(request: FastifyRequest, reply: FastifyReply) {
   const updateTestCaseParamsSchema = z.object({
@@ -12,6 +12,8 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       title: z.string().optional(),
       status: z.enum(['open', 'in_progress', 'error', 'success']).optional(),
       description: z.string().nullable().optional(),
+      error_description: z.string().nullable().optional(),
+      error_attachment: z.string().nullable().optional(),
       priority: z.enum(['not_set', 'high', 'medium', 'low']).optional(),
       type: z
         .enum([
