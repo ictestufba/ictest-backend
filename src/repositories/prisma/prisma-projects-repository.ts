@@ -21,14 +21,20 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 
   async list() {
     return prisma.project.findMany({
-      where: { is_deleted: false },
+      where: {
+        is_deleted: false,
+      },
       include: {
         members: {
           include: {
             user: true,
           },
         },
-        test_cases: true,
+        test_cases: {
+          where: {
+            is_deleted: false,
+          },
+        },
       },
     })
   }
