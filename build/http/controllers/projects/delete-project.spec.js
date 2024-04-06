@@ -38197,7 +38197,10 @@ app.setErrorHandler((error, _, reply) => {
     console.error(error);
   } else {
   }
-  return reply.status(500).send({ message: "Internal server error." });
+  return reply.status(500).send({
+    message: "Internal server error.",
+    error: error.message
+  });
 });
 
 // node_modules/@vitest/runner/node_modules/yocto-queue/index.js

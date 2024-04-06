@@ -33,7 +33,7 @@ app.register(usersRoutes)
 app.register(projectsRoutes)
 app.register(testCasesRoutes)
 
-app.setErrorHandler((error, _, reply) => {
+app.setErrorHandler((error: Error, _, reply) => {
   if (error instanceof ZodError) {
     return reply
       .status(400)
@@ -46,5 +46,8 @@ app.setErrorHandler((error, _, reply) => {
     // TODO: Fazer o log para alguma ferramenta de observabilidade (ex: Datadog)
   }
 
-  return reply.status(500).send({ message: 'Internal server error.' })
+  return reply.status(500).send({
+    message: 'Internal server error.',
+    error: error.message,
+  })
 })

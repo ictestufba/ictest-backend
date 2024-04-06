@@ -1496,7 +1496,10 @@ app.setErrorHandler((error, _, reply) => {
     console.error(error);
   } else {
   }
-  return reply.status(500).send({ message: "Internal server error." });
+  return reply.status(500).send({
+    message: "Internal server error.",
+    error: error.message
+  });
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
