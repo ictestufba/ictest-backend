@@ -180,6 +180,11 @@ var PrismaUsersRepository = class {
         }
       },
       select: {
+        id: true,
+        name: true,
+        email: true,
+        avatar: true,
+        created_at: true,
         password_hash: false
       }
     });
