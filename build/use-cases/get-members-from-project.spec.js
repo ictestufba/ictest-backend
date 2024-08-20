@@ -17730,7 +17730,13 @@ var GetMembersFromProjectUseCase = class {
     for (let i2 = 0; i2 < response.length; i2++) {
       const user = await this.usersRepository.findById(response[i2]);
       if (user)
-        users.push(user);
+        users.push({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          created_at: user.created_at
+        });
     }
     return { users };
   }
