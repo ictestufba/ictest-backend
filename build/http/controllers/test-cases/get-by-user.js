@@ -159,6 +159,9 @@ var PrismaUsersRepository = class {
         email: {
           contains: email
         }
+      },
+      select: {
+        password_hash: false
       }
     });
     return users;

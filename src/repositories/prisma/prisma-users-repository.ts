@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 
 import { UsersRepository } from '../users-repository'
 
@@ -31,7 +31,10 @@ export class PrismaUsersRepository implements UsersRepository {
           contains: email,
         },
       },
-    })
+      select:{
+        password_hash: false
+      }
+    }) as User[];
 
     return users
   }
