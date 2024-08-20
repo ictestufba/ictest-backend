@@ -25,16 +25,16 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async findByPartialEmail(email: string) {
-    const users = await prisma.user.findMany({
+    const users = (await prisma.user.findMany({
       where: {
         email: {
           contains: email,
         },
       },
-      select:{
-        password_hash: false
-      }
-    }) as User[];
+      select: {
+        password_hash: false,
+      },
+    })) as User[]
 
     return users
   }
