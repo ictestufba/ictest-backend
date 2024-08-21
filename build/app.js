@@ -95,7 +95,16 @@ var PrismaProjectsRepository = class {
       include: {
         members: {
           include: {
-            user: true
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar: true,
+                created_at: true,
+                password_hash: false
+              }
+            }
           }
         },
         test_cases: {
